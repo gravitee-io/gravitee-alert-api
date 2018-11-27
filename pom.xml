@@ -36,7 +36,6 @@
     <properties>
         <gravitee-common.version>1.12.0</gravitee-common.version>
         <gravitee-notifier-api.version>1.0.0-SNAPSHOT</gravitee-notifier-api.version>
-        <gravitee-node.version>1.2.0-SNAPSHOT</gravitee-node.version>
     </properties>
 
     <dependencies>
@@ -49,11 +48,6 @@
             <groupId>io.gravitee.common</groupId>
             <artifactId>gravitee-common</artifactId>
             <version>${gravitee-common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.gravitee.node</groupId>
-            <artifactId>gravitee-node-api</artifactId>
-            <version>${gravitee-node.version}</version>
         </dependency>
     </dependencies>
 </project>
