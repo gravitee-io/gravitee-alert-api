@@ -15,13 +15,10 @@
  */
 package io.gravitee.alert.api.event;
 
-import java.util.Map;
-
 /**
  * @author Azize ELAMRANI (azize.elamrani at graviteesource.com)
  * @author GraviteeSource Team
  */
 public interface Alertable {
     long getTimestamp();
-    void setContext(Map<String, Object> context);
 }
