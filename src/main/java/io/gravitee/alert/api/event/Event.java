@@ -30,14 +30,14 @@ public class Event extends AbstractAlertable implements Alertable, Serializable 
 
     private static final long serialVersionUID = 1379928246655907008L;
 
-    private Map<String, Object> context;
+    private Map<String, String> context;
     private Map<String, Object> props;
 
-    public Map<String, Object> getContext() {
+    public Map<String, String> getContext() {
         return context;
     }
 
-    public void setContext(Map<String, Object> context) {
+    public void setContext(Map<String, String> context) {
         this.context = context;
     }
 
@@ -72,6 +72,7 @@ public class Event extends AbstractAlertable implements Alertable, Serializable 
     public static class Builder {
         private long timestamp;
         private String type;
+        private Map<String, String> context;
         private Map<String, Object> props;
 
         public Builder timestamp(long timestamp) {
@@ -84,6 +85,14 @@ public class Event extends AbstractAlertable implements Alertable, Serializable 
             return this;
         }
 
+        public Builder context(String key, String value) {
+            if (context == null) {
+                context = new LinkedHashMap<>();
+            }
+            context.put(key, value);
+            return this;
+        }
+
         public Builder prop(String key, Object value) {
             if (props == null) {
                 props = new LinkedHashMap<>();
@@ -92,11 +101,13 @@ public class Event extends AbstractAlertable implements Alertable, Serializable 
             return this;
         }
 
+
         public Event build() {
             final Event alertEvent = new Event();
             alertEvent.setId(UUID.toString(UUID.random()));
             alertEvent.setTimestamp(timestamp);
             alertEvent.setType(type);
+            alertEvent.setContext(context);
             alertEvent.setProps(props);
             return alertEvent;
         }
