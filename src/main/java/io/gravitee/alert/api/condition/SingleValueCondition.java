@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.event;
+package io.gravitee.alert.api.condition;
 
 /**
- * @author Azize ELAMRANI (azize.elamrani at graviteesource.com)
+ * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface Alertable {
-    long getTimestamp();
+public interface SingleValueCondition extends Condition {
+
 }

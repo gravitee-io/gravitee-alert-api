@@ -15,101 +15,52 @@
  */
 package io.gravitee.alert.api.event;
 
-import io.gravitee.common.utils.UUID;
-
-import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * @author Azize ELAMRANI (azize.elamrani at graviteesource.com)
+ * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Event extends AbstractAlertable implements Alertable, Serializable {
+public interface Event extends Comparable<Event> {
 
-    private static final long serialVersionUID = 1379928246655907008L;
+    /**
+     * Event identifier.
+     *
+     * @return Event identifier.
+     */
+    String id();
 
-    private Map<String, String> context;
-    private Map<String, Object> props;
+    /**
+     * Event timestamp.
+     *
+     * @return Event timestamp.
+     */
+    long timestamp();
 
-    public Map<String, String> getContext() {
-        return context;
+    /**
+     * Type of event: healtcheck, request, node_monitor, ...
+     * @return
+     */
+    String type();
+
+    Map<String, String> context();
+
+    Map<String, Object> properties();
+
+    static DefaultEvent.Builder at(long timestamp) {
+        return new DefaultEvent.Builder(timestamp);
     }
 
-    public void setContext(Map<String, String> context) {
-        this.context = context;
-    }
-
-    public Map<String, Object> getProps() {
-        return props;
-    }
-
-    public void setProps(Map<String, Object> props) {
-        this.props = props;
+    static DefaultEvent.Builder now() {
+        return at(System.currentTimeMillis());
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Event)) return false;
-        return super.equals(o);
-    }
+    default int compareTo(Event o) {
+        int c = this.id().compareTo(o.id());
+        if (0 != c)
+            return c;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode());
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                ", context=" + context +
-                ", props=" + props +
-                "} " + super.toString();
-    }
-
-    public static class Builder {
-        private long timestamp;
-        private String type;
-        private Map<String, String> context;
-        private Map<String, Object> props;
-
-        public Builder timestamp(long timestamp) {
-            this.timestamp = timestamp;
-            return this;
-        }
-
-        public Builder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        public Builder context(String key, String value) {
-            if (context == null) {
-                context = new LinkedHashMap<>();
-            }
-            context.put(key, value);
-            return this;
-        }
-
-        public Builder prop(String key, Object value) {
-            if (props == null) {
-                props = new LinkedHashMap<>();
-            }
-            props.put(key, value);
-            return this;
-        }
-
-
-        public Event build() {
-            final Event alertEvent = new Event();
-            alertEvent.setId(UUID.toString(UUID.random()));
-            alertEvent.setTimestamp(timestamp);
-            alertEvent.setType(type);
-            alertEvent.setContext(context);
-            alertEvent.setProps(props);
-            return alertEvent;
-        }
+        return Long.compare(this.timestamp(), o.timestamp());
     }
 }

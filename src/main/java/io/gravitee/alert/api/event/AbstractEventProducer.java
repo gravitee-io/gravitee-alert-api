@@ -13,8 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.service;
+package io.gravitee.alert.api.event;
 
-public interface AlertTrigger {
-    void triggerAll();
+import io.gravitee.common.component.AbstractLifecycleComponent;
+
+/**
+ * @author David BRASSELY (david.brassely at graviteesource.com)
+ * @author GraviteeSource Team
+ */
+public abstract class AbstractEventProducer extends AbstractLifecycleComponent<EventProducer> implements EventProducer {
+
+    @Override
+    protected void doStart() throws Exception {
+
+    }
+
+    @Override
+    protected void doStop() throws Exception {
+
+    }
 }

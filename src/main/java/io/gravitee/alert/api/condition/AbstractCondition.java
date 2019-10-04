@@ -13,42 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.trigger;
-
-import java.io.Serializable;
+package io.gravitee.alert.api.condition;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public abstract class AbstractCondition implements Condition {
 
-    private static final long serialVersionUID = 4134949371394013502L;
+    private final Type type;
 
-    private String rel;
-    private String href;
-
-    public String getRel() {
-        return rel;
-    }
-
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
+    AbstractCondition(Type type) {
+        this.type = type;
     }
 
     @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+    public Type getType() {
+        return type;
     }
 }

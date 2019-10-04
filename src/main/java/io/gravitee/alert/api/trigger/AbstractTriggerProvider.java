@@ -15,40 +15,21 @@
  */
 package io.gravitee.alert.api.trigger;
 
-import java.io.Serializable;
+import io.gravitee.common.component.AbstractLifecycleComponent;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public abstract class AbstractTriggerProvider extends AbstractLifecycleComponent<TriggerProvider> implements TriggerProvider {
 
-    private static final long serialVersionUID = 4134949371394013502L;
+    @Override
+    protected void doStart() throws Exception {
 
-    private String rel;
-    private String href;
-
-    public String getRel() {
-        return rel;
-    }
-
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
     }
 
     @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+    protected void doStop() throws Exception {
+
     }
 }
