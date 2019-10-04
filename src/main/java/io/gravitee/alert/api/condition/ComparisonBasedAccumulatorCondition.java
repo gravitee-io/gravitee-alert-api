@@ -13,42 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.trigger;
+package io.gravitee.alert.api.condition;
 
-import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public abstract class ComparisonBasedAccumulatorCondition extends WindowBasedCondition {
 
-    private static final long serialVersionUID = 4134949371394013502L;
+    private final SingleValueCondition comparison;
 
-    private String rel;
-    private String href;
-
-    public String getRel() {
-        return rel;
+    ComparisonBasedAccumulatorCondition(Type type, SingleValueCondition comparison, TimeUnit timeUnit, long duration) {
+        super(type, timeUnit, duration);
+        this.comparison = comparison;
     }
 
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+    public SingleValueCondition getComparison() {
+        return comparison;
     }
 }

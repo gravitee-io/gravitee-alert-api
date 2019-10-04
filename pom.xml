@@ -35,7 +35,7 @@
 
     <properties>
         <gravitee-common.version>1.14.0</gravitee-common.version>
-        <gravitee-notifier-api.version>1.1.0</gravitee-notifier-api.version>
+        <gravitee-notifier-api.version>1.2.0-SNAPSHOT</gravitee-notifier-api.version>
     </properties>
 
     <dependencies>
@@ -44,10 +44,25 @@
             <artifactId>gravitee-notifier-api</artifactId>
             <version>${gravitee-notifier-api.version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.gravitee.common</groupId>
             <artifactId>gravitee-common</artifactId>
             <version>${gravitee-common.version}</version>
+        </dependency>
+
+        <!-- Jackson dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Test scope -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

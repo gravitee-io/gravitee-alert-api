@@ -15,29 +15,53 @@
  */
 package io.gravitee.alert.api.trigger;
 
+import com.fasterxml.jackson.annotation.*;
+import io.gravitee.alert.api.condition.Condition;
+import io.gravitee.alert.api.condition.Filter;
+import io.gravitee.common.utils.UUID;
 import io.gravitee.notifier.api.Notification;
 
 import java.io.Serializable;
 import java.util.*;
 
 /**
- * @author Azize ELAMRANI (azize.elamrani at graviteesource.com)
+ * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({"id", "name", "source", "enabled", "conditions", "filters", "dampening", "notifications", "metadata"})
 public class Trigger implements Serializable {
 
     private static final long serialVersionUID = 19504799855563L;
 
     private String id;
+    private Severity severity = Severity.INFO;
+    private String source;
     private String name;
-    private String eventType;
-    private Map<String, String> context;
-    private List<String> scopeProperties;
-    private String condition;
+    private String description;
+    private List<Condition> conditions;
     private List<Notification> notifications;
-    private List<Link> links;
-    private Boolean enabled;
-    private Boolean notifyOnce;
+    private Dampening dampening;
+    private Map<String, Map<String, String>> metadata;
+    private boolean enabled;
+    private List<Filter> filters;
+
+    @JsonCreator
+    protected Trigger (
+            @JsonProperty(value = "id", required = true) String id,
+            @JsonProperty(value = "name", required = true) String name,
+            @JsonProperty(value = "severity") Severity severity,
+            @JsonProperty(value = "source", required = true) String source,
+            @JsonProperty(value = "enabled") boolean enabled
+    ) {
+        // Default private constructor to force builder usage.
+        this.source = source;
+        this.id = id;
+        this.name = name;
+        this.severity = (severity == null) ? Severity.INFO : severity;
+        this.enabled = enabled;
+    }
 
     public String getId() {
         return id;
@@ -55,36 +79,28 @@ public class Trigger implements Serializable {
         this.name = name;
     }
 
-    public String getEventType() {
-        return eventType;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public String getSource() {
+        return source;
     }
 
-    public Map<String, String> getContext() {
-        return context;
+    public List<Condition> getConditions() {
+        return conditions;
     }
 
-    public void setContext(Map<String, String> context) {
-        this.context = context;
+    public void setConditions(List<Condition> conditions) {
+        this.conditions = conditions;
     }
 
-    public List<String> getScopeProperties() {
-        return scopeProperties;
+    public Map<String, Map<String, String>> getMetadata() {
+        return metadata;
     }
 
-    public void setScopeProperties(List<String> scopeProperties) {
-        this.scopeProperties = scopeProperties;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setMetadata(Map<String, Map<String, String>> metadata) {
+        this.metadata = metadata;
     }
 
     public List<Notification> getNotifications() {
@@ -95,28 +111,44 @@ public class Trigger implements Serializable {
         this.notifications = notifications;
     }
 
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
-    public Boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    public Boolean getNotifyOnce() {
-        return notifyOnce;
+    public Dampening getDampening() {
+        return dampening;
     }
 
-    public void setNotifyOnce(Boolean notifyOnce) {
-        this.notifyOnce = notifyOnce;
+    public void setDampening(Dampening dampening) {
+        this.dampening = dampening;
+    }
+
+    public List<Filter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<Filter> filters) {
+        this.filters = filters;
+    }
+
+    public Severity getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -136,29 +168,44 @@ public class Trigger implements Serializable {
     public String toString() {
         return "Trigger{" +
                 "id='" + id + '\'' +
+                ", source='" + source + '\'' +
                 ", name='" + name + '\'' +
-                ", eventType='" + eventType + '\'' +
-                ", context=" + context +
-                ", scopeProperties=" + scopeProperties +
-                ", condition='" + condition + '\'' +
+                ", dampening='" + dampening + '\'' +
                 ", notifications=" + notifications +
-                ", links=" + links +
+                ", conditions=" + conditions +
+                ", filters=" + filters +
                 ", enabled=" + enabled +
-                ", notifyOnce=" + notifyOnce +
                 '}';
+    }
+
+
+
+    public static Builder on(String source) {
+        return new Builder(source);
+    }
+
+    public enum Severity {
+        INFO,
+        WARNING,
+        CRITICAL
     }
 
     public static class Builder {
         private String id;
+        private final String source;
         private String name;
-        private String eventType;
-        private Map<String, String> context;
-        private List<String> scopeProperties;
-        private String condition;
-        private List<Link> links = new ArrayList<>();
+        private String description;
+        private Severity severity;
+        private Map<String, Map<String, String>> metadata;
         private List<Notification> notifications = new ArrayList<>();
-        private Boolean enabled;
-        private Boolean notifyOnce;
+        private List<Condition> conditions = new ArrayList<>();
+        private List<Filter> filters = new ArrayList<>();
+        private boolean enabled = true;
+        private Dampening dampening;
+
+        private Builder(String source) {
+            this.source = source;
+        }
 
         public Trigger.Builder id(String id) {
             this.id = id;
@@ -170,37 +217,28 @@ public class Trigger implements Serializable {
             return this;
         }
 
-        public Trigger.Builder eventType(String eventType) {
-            this.eventType = eventType;
+        public Trigger.Builder description(String description) {
+            this.description = description;
             return this;
         }
 
-        public Trigger.Builder context(String contextKey, String contextValue) {
-            if (context == null) {
-                context = new LinkedHashMap<>();
+        public Trigger.Builder severity(Severity severity) {
+            this.severity = severity;
+            return this;
+        }
+
+        public Trigger.Builder metadata(String reference, String key, String value) {
+            if (metadata == null) {
+                metadata = new HashMap<>();
             }
-            this.context.put(contextKey, contextValue);
-            return this;
-        }
 
-        public Trigger.Builder scopeProperty(String scopeProperty) {
-            if (scopeProperties == null) {
-                scopeProperties = new ArrayList<>();
+            Map<String, String> refMetadata = this.metadata.get(reference);
+            if (refMetadata == null) {
+                refMetadata = new HashMap<>();
+                this.metadata.put(reference, refMetadata);
             }
-            this.scopeProperties.add(scopeProperty);
-            return this;
-        }
+            refMetadata.put(key, value);
 
-        public Trigger.Builder condition(String condition) {
-            this.condition = condition;
-            return this;
-        }
-
-        public Trigger.Builder link(String rel, String href) {
-            final Link link = new Link();
-            link.setRel(rel);
-            link.setHref(href);
-            links.add(link);
             return this;
         }
 
@@ -209,33 +247,62 @@ public class Trigger implements Serializable {
             return this;
         }
 
-        public Trigger.Builder notifyOnce(boolean notifyOnce) {
-            this.notifyOnce = notifyOnce;
-            return this;
-        }
-
-        public Trigger.Builder notification(String destination, String type, String configuration) {
-            final Notification notification = new Notification();
-            notification.setDestination(destination);
-            notification.setType(type);
-            notification.setConfiguration(configuration);
+        public Trigger.Builder notification(Notification notification) {
             notifications.add(notification);
             return this;
         }
 
+        public Trigger.Builder dampening(Dampening dampening) {
+            this.dampening = dampening;
+            return this;
+        }
+
+        public Trigger.Builder condition(Condition condition) {
+            conditions.add(condition);
+            return this;
+        }
+
+        public Trigger.Builder filter(Filter filter) {
+            if (filters == null) {
+                filters = new ArrayList<>();
+            }
+
+            filters.add(filter);
+            return this;
+        }
+
+        public Trigger.Builder filters(List<Filter> filters) {
+            if (filters != null) {
+                for (Filter filter : filters) {
+                    filter(filter);
+                }
+            }
+            return this;
+        }
+
         public Trigger build() {
-            final Trigger alertTrigger = new Trigger();
-            alertTrigger.setId(id);
-            alertTrigger.setName(name);
-            alertTrigger.setEventType(eventType);
-            alertTrigger.setContext(context);
-            alertTrigger.setScopeProperties(scopeProperties);
-            alertTrigger.setCondition(condition);
-            alertTrigger.setLinks(links);
-            alertTrigger.setNotifications(notifications);
-            alertTrigger.setEnabled(enabled);
-            alertTrigger.setNotifyOnce(notifyOnce);
-            return alertTrigger;
+            final Trigger trigger = new Trigger(
+                    (id == null) ? UUID.random().toString() : id,
+                    name, severity, source, enabled);
+
+            trigger.setDescription(description);
+            trigger.setNotifications(notifications);
+            trigger.setEnabled(enabled);
+            trigger.setMetadata(metadata);
+
+            if (conditions == null || conditions.isEmpty()) {
+                throw new IllegalStateException("A trigger need, at least, one condition defined");
+            }
+
+            trigger.setConditions(conditions);
+            trigger.setFilters(filters);
+            if (dampening != null) {
+                trigger.setDampening(dampening);
+            } else {
+                trigger.setDampening(Dampening.strictCount(1));
+            }
+
+            return trigger;
         }
     }
 }

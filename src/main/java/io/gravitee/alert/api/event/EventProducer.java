@@ -13,42 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.trigger;
+package io.gravitee.alert.api.event;
 
-import java.io.Serializable;
+import io.gravitee.common.component.LifecycleComponent;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public interface EventProducer extends LifecycleComponent<EventProducer> {
 
-    private static final long serialVersionUID = 4134949371394013502L;
-
-    private String rel;
-    private String href;
-
-    public String getRel() {
-        return rel;
-    }
-
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
-    }
+    void send(Event event);
 }

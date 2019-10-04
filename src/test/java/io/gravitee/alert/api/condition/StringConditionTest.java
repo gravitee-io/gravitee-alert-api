@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.service;
+package io.gravitee.alert.api.condition;
 
-import io.gravitee.alert.api.event.Alertable;
-import io.gravitee.alert.api.trigger.Trigger;
-import io.gravitee.common.service.Service;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.concurrent.CompletableFuture;
+/**
+ * @author David BRASSELY (david.brassely at graviteesource.com)
+ * @author GraviteeSource Team
+ */
+public class StringConditionTest {
 
-public interface Alert extends Service {
+    @Test
+    public void shouldBuildStringCondition() {
+        StringCondition condition = StringCondition
+                .equals("my-field", "a-value")
+                .build();
 
-    CompletableFuture<Void> send(Alertable alertable);
-    default boolean canHandle(Alertable alertable) {
-        return true;
-    }
-
-    CompletableFuture<Void> send(Trigger trigger);
-    default boolean canHandle(Trigger trigger) {
-        return true;
+        Assert.assertNotNull(condition);
     }
 }

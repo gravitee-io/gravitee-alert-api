@@ -15,40 +15,32 @@
  */
 package io.gravitee.alert.api.trigger;
 
-import java.io.Serializable;
+import io.gravitee.common.component.LifecycleComponent;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public interface TriggerProvider extends LifecycleComponent<TriggerProvider> {
 
-    private static final long serialVersionUID = 4134949371394013502L;
+    void register(Trigger trigger);
 
-    private String rel;
-    private String href;
+    void unregister(Trigger trigger);
 
-    public String getRel() {
-        return rel;
+    default void addListener(Listener listener) {
     }
 
-    public void setRel(String rel) {
-        this.rel = rel;
+    interface Listener {
+
     }
 
-    public String getHref() {
-        return href;
+    interface OnConnectionListener extends Listener {
+
+        void doOnConnect();
     }
 
-    public void setHref(String href) {
-        this.href = href;
-    }
+    interface OnDisconnectionListener extends Listener {
 
-    @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+        void doOnDisconnect();
     }
 }

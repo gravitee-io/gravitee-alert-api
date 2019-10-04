@@ -13,42 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.trigger;
+package io.gravitee.alert.api.condition;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class Link implements Serializable {
+public class WindowBasedCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = 4134949371394013502L;
+    private final long duration;
+    private final TimeUnit timeUnit;
 
-    private String rel;
-    private String href;
+    WindowBasedCondition(Type type, TimeUnit timeUnit, long duration) {
+        super(type);
 
-    public String getRel() {
-        return rel;
+        this.duration = duration;
+        this.timeUnit = timeUnit;
     }
 
-    public void setRel(String rel) {
-        this.rel = rel;
+    public long getDuration() {
+        return duration;
     }
 
-    public String getHref() {
-        return href;
+    public TimeUnit getTimeUnit() {
+        return timeUnit;
     }
 
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    @Override
-    public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+    @JsonIgnore
+    public long getWindowTime() {
+        return (timeUnit != null) ? timeUnit.toMillis(duration) : duration;
     }
 }
