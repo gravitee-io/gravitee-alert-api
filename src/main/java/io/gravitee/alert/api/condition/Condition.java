@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
+
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
@@ -48,7 +50,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public interface Condition {
+public interface Condition extends Serializable {
 
     enum Type {
         STRING, THRESHOLD, THRESHOLD_RANGE, RATE, FREQUENCY, AGGREGATION, COMPARE, STRING_COMPARE
