@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author GraviteeSource Team
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Dampening {
+public class Dampening implements Serializable {
 
     private final Mode mode;
 
