@@ -29,13 +29,13 @@
 
     <groupId>io.gravitee.alert</groupId>
     <artifactId>gravitee-alert-api</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.1</version>
 
     <name>Gravitee.io - Alert - API</name>
 
     <properties>
-        <gravitee-common.version>1.16.0</gravitee-common.version>
-        <gravitee-notifier-api.version>1.2.1-SNAPSHOT</gravitee-notifier-api.version>
+        <gravitee-common.version>1.16.1</gravitee-common.version>
+        <gravitee-notifier-api.version>1.2.1</gravitee-notifier-api.version>
     </properties>
 
     <dependencies>
