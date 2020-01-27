@@ -219,18 +219,11 @@ public class TriggerTest {
     }
 
     @Test
-    public void shouldExportToJson_frequencyCondition() throws IOException {
+    public void shouldExportToJson_missingDataCondition() throws IOException {
         Trigger trigger = Trigger
                 .on("my-source")
-                .name("shouldExportToJson_frequencyCondition")
-                .condition(
-                        FrequencyCondition
-                                .of(ThresholdCondition.greaterThan("status", 400d).build())
-                                .duration(1, TimeUnit.MINUTES)
-                                .greaterThanOrEquals(40)
-                                .build()
-                )
-                .filter(StringCondition.equals("api", "my-api").build())
+                .name("shouldExportToJson_rmissingDataCondition")
+                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
                 .build();
 
         String json = mapper.writeValueAsString(trigger);
