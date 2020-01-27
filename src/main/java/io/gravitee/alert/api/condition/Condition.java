@@ -41,19 +41,19 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = AggregationCondition.class, name = "aggregation"),
         @JsonSubTypes.Type(value = RateCondition.class, name = "RATE"),
         @JsonSubTypes.Type(value = RateCondition.class, name = "rate"),
-        @JsonSubTypes.Type(value = FrequencyCondition.class, name = "FREQUENCY"),
-        @JsonSubTypes.Type(value = FrequencyCondition.class, name = "frequency"),
         @JsonSubTypes.Type(value = CompareCondition.class, name = "COMPARE"),
         @JsonSubTypes.Type(value = CompareCondition.class, name = "compare"),
         @JsonSubTypes.Type(value = StringCompareCondition.class, name = "STRING_COMPARE"),
-        @JsonSubTypes.Type(value = StringCompareCondition.class, name = "string_compare")
+        @JsonSubTypes.Type(value = StringCompareCondition.class, name = "string_compare"),
+        @JsonSubTypes.Type(value = MissingDataCondition.class, name = "MISSING_DATA"),
+        @JsonSubTypes.Type(value = MissingDataCondition.class, name = "missing_data")
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface Condition extends Serializable {
 
     enum Type {
-        STRING, THRESHOLD, THRESHOLD_RANGE, RATE, FREQUENCY, AGGREGATION, COMPARE, STRING_COMPARE
+        STRING, THRESHOLD, THRESHOLD_RANGE, RATE, FREQUENCY, AGGREGATION, COMPARE, STRING_COMPARE, MISSING_DATA
     }
 
     Type getType();

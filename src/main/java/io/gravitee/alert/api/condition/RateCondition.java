@@ -78,18 +78,18 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     public static class DurationBuilder {
         private final SingleValueCondition comparison;
-        private final long duration;
-        private final TimeUnit timeUnit;
+            private final long duration;
+            private final TimeUnit timeUnit;
 
-        DurationBuilder(SingleValueCondition comparison, long duration, TimeUnit timeUnit) {
-            this.comparison = comparison;
-            this.duration = duration;
-            this.timeUnit = timeUnit;
-        }
+            DurationBuilder(SingleValueCondition comparison, long duration, TimeUnit timeUnit) {
+                this.comparison = comparison;
+                this.duration = duration;
+                this.timeUnit = timeUnit;
+            }
 
-        DurationBuilder(SingleValueCondition comparison, long duration) {
-            this(comparison, duration, null);
-        }
+            DurationBuilder(SingleValueCondition comparison, long duration) {
+                this(comparison, duration, null);
+            }
 
         public ConditionBuilder lowerThan(Double threshold) {
             return new ConditionBuilder(comparison, Operator.LT, threshold, duration, timeUnit);
