@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.condition;
+package io.gravitee.alert.api.condition.projection;
 
-import io.gravitee.alert.api.condition.projection.Projection;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public abstract class ComparisonBasedAccumulatorCondition extends ProjectionsAwareCondition {
+public class PropertyProjectionTest {
 
-    private final SingleValueCondition comparison;
+    @Test
+    public void shouldBuildProjection() {
+        PropertyProjection projection = Projections.property("api");
 
-    ComparisonBasedAccumulatorCondition(Type type, SingleValueCondition comparison, TimeUnit timeUnit, long duration, List<Projection> projections) {
-        super(type, timeUnit, duration, projections);
-
-        this.comparison = comparison;
+        Assert.assertNotNull(projection);
+        Assert.assertEquals("api", projection.getProperty());
     }
 
-    public SingleValueCondition getComparison() {
-        return comparison;
+    @Test (expected = NullPointerException.class)
+    public void shouldBuildProjection_emptyProperty() {
+        Projections.property(null);
     }
 }

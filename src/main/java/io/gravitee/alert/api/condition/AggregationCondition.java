@@ -17,14 +17,17 @@ package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.gravitee.alert.api.condition.projection.Projection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class AggregationCondition extends WindowBasedCondition {
+public class AggregationCondition extends ProjectionsAwareCondition {
 
     public enum Operator {
         LT, LTE, GTE, GT
@@ -49,8 +52,9 @@ public class AggregationCondition extends WindowBasedCondition {
             @JsonProperty(value = "operator", required = true) Operator operator,
             @JsonProperty(value = "threshold", required = true) Double threshold,
             @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
-            @JsonProperty(value = "duration", required = true) long duration) {
-        super(Type.AGGREGATION, timeUnit, duration);
+            @JsonProperty(value = "duration", required = true) long duration,
+            @JsonProperty(value = "projections") List<Projection> projections) {
+        super(Type.AGGREGATION, timeUnit, duration, projections);
 
         this.property = property;
         this.operator = operator;
@@ -114,6 +118,8 @@ public class AggregationCondition extends WindowBasedCondition {
         private final Operator operator;
         private final Double threshold;
 
+        private List<Projection> projections;
+
         ThresholdBuilder(FunctionBuilder functionBuilder, DurationBuilder durationBuilder,
                          Operator operator, Double threshold) {
             this.functionBuilder = functionBuilder;
@@ -123,12 +129,23 @@ public class AggregationCondition extends WindowBasedCondition {
             this.threshold = threshold;
         }
 
+        public ThresholdBuilder projection(Projection projection) {
+            if (projections == null) {
+                projections = new ArrayList<>();
+            }
+
+            projections.add(projection);
+
+            return this;
+        }
+
         public AggregationCondition build() {
             return new AggregationCondition(
                     functionBuilder.getFunction(),
                     functionBuilder.getProperty(),
                     operator, threshold,
-                    durationBuilder.getTimeUnit(), durationBuilder.getDuration());
+                    durationBuilder.getTimeUnit(), durationBuilder.getDuration(),
+                    projections);
         }
     }
 

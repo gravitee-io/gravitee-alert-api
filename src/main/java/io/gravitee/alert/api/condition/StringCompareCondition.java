@@ -67,11 +67,19 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
     }
 
     public static FilterBuilder endsWith(String property, String property2) {
-        return new FilterBuilder(property, Operator.ENDS_WITH, property2, false);
+        return endsWith(property, property2, false);
+    }
+
+    public static FilterBuilder endsWith(String property, String property2, boolean ignoreCase) {
+        return new FilterBuilder(property, Operator.ENDS_WITH, property2, ignoreCase);
     }
 
     public static FilterBuilder contains(String property, String property2) {
-        return new FilterBuilder(property, Operator.CONTAINS, property2, false);
+        return contains(property, property2, false);
+    }
+
+    public static FilterBuilder contains(String property, String property2, boolean ignoreCase) {
+        return new FilterBuilder(property, Operator.CONTAINS, property2, ignoreCase);
     }
 
     public static FilterBuilder matches(String property, String pattern) {
@@ -83,7 +91,11 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
     }
 
     public static StringCondition.FilterBuilder startsWith(String property, String pattern) {
-        return new StringCondition.FilterBuilder(property, StringCondition.Operator.STARTS_WITH, pattern, false);
+        return startsWith(property, pattern, false);
+    }
+
+    public static StringCondition.FilterBuilder startsWith(String property, String pattern, boolean ignoreCase) {
+        return new StringCondition.FilterBuilder(property, StringCondition.Operator.STARTS_WITH, pattern, ignoreCase);
     }
 
     public static class FilterBuilder {

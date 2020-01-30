@@ -24,17 +24,17 @@ import java.util.concurrent.TimeUnit;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public abstract class ComparisonBasedAccumulatorCondition extends ProjectionsAwareCondition {
+public class ProjectionsAwareCondition extends WindowBasedCondition {
 
-    private final SingleValueCondition comparison;
+    private final List<Projection> projections;
 
-    ComparisonBasedAccumulatorCondition(Type type, SingleValueCondition comparison, TimeUnit timeUnit, long duration, List<Projection> projections) {
-        super(type, timeUnit, duration, projections);
+    ProjectionsAwareCondition(Type type, TimeUnit timeUnit, long duration, List<Projection> projections) {
+        super(type, timeUnit, duration);
 
-        this.comparison = comparison;
+        this.projections = projections;
     }
 
-    public SingleValueCondition getComparison() {
-        return comparison;
+    public List<Projection> getProjections() {
+        return projections;
     }
 }

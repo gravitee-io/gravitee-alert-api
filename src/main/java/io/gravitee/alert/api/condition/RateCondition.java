@@ -17,7 +17,10 @@ package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.gravitee.alert.api.condition.projection.Projection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,8 +43,9 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
             @JsonProperty(value = "threshold", required = true) double threshold,
             @JsonProperty(value = "comparison", required = true) SingleValueCondition comparison,
             @JsonProperty(value = "duration", required = true) long duration,
-            @JsonProperty(value = "timeUnit") TimeUnit timeUnit) {
-        super(Type.RATE, comparison, timeUnit, duration);
+            @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+            @JsonProperty(value = "projections") List<Projection> projections) {
+        super(Type.RATE, comparison, timeUnit, duration, projections);
 
         this.operator = operator;
         this.threshold = threshold;
@@ -68,7 +72,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
         }
 
         public DurationBuilder duration(long duration, TimeUnit timeUnit) {
-            return new DurationBuilder( comparison, duration, timeUnit);
+            return new DurationBuilder(comparison, duration, timeUnit);
         }
 
         public DurationBuilder duration(long duration) {
@@ -78,49 +82,60 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     public static class DurationBuilder {
         private final SingleValueCondition comparison;
-            private final long duration;
-            private final TimeUnit timeUnit;
+        private final long duration;
+        private final TimeUnit timeUnit;
 
-            DurationBuilder(SingleValueCondition comparison, long duration, TimeUnit timeUnit) {
-                this.comparison = comparison;
-                this.duration = duration;
-                this.timeUnit = timeUnit;
-            }
-
-            DurationBuilder(SingleValueCondition comparison, long duration) {
-                this(comparison, duration, null);
-            }
-
-        public ConditionBuilder lowerThan(Double threshold) {
-            return new ConditionBuilder(comparison, Operator.LT, threshold, duration, timeUnit);
+        DurationBuilder(SingleValueCondition comparison, long duration, TimeUnit timeUnit) {
+            this.comparison = comparison;
+            this.duration = duration;
+            this.timeUnit = timeUnit;
         }
 
-        public ConditionBuilder lowerThanOrEquals(Double threshold) {
-            return new ConditionBuilder(comparison, Operator.LTE, threshold, duration, timeUnit);
+        DurationBuilder(SingleValueCondition comparison, long duration) {
+            this(comparison, duration, null);
         }
 
-        public ConditionBuilder greaterThanOrEquals(Double threshold) {
-            return new ConditionBuilder(comparison, Operator.GTE, threshold, duration, timeUnit);
+        public ProjectionBuilder lowerThan(Double threshold) {
+            return new ProjectionBuilder(comparison, Operator.LT, threshold, duration, timeUnit);
         }
 
-        public ConditionBuilder greaterThan(Double threshold) {
-            return new ConditionBuilder(comparison, Operator.GT, threshold, duration, timeUnit);
+        public ProjectionBuilder lowerThanOrEquals(Double threshold) {
+            return new ProjectionBuilder(comparison, Operator.LTE, threshold, duration, timeUnit);
+        }
+
+        public ProjectionBuilder greaterThanOrEquals(Double threshold) {
+            return new ProjectionBuilder(comparison, Operator.GTE, threshold, duration, timeUnit);
+        }
+
+        public ProjectionBuilder greaterThan(Double threshold) {
+            return new ProjectionBuilder(comparison, Operator.GT, threshold, duration, timeUnit);
         }
     }
 
-    public static class ConditionBuilder {
+    public static class ProjectionBuilder {
         private final SingleValueCondition comparison;
         private final long duration;
         private final TimeUnit timeUnit;
         private final Operator operator;
         private final Double threshold;
+        private List<Projection> projections;
 
-        ConditionBuilder(SingleValueCondition comparison, Operator operator, Double threshold, long duration, TimeUnit timeUnit) {
+        ProjectionBuilder(SingleValueCondition comparison, Operator operator, Double threshold, long duration, TimeUnit timeUnit) {
             this.comparison = comparison;
             this.duration = duration;
             this.timeUnit = timeUnit;
             this.operator = operator;
             this.threshold = threshold;
+        }
+
+        public ProjectionBuilder projection(Projection projection) {
+            if (projections == null) {
+                projections = new ArrayList<>();
+            }
+
+            projections.add(projection);
+
+            return this;
         }
 
         public RateCondition build() {
@@ -129,7 +144,8 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
                     threshold,
                     comparison,
                     duration,
-                    timeUnit);
+                    timeUnit,
+                    projections);
         }
     }
 }

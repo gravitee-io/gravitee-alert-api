@@ -15,6 +15,8 @@
  */
 package io.gravitee.alert.api.condition;
 
+import io.gravitee.alert.api.condition.projection.Projections;
+import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,8 +47,10 @@ public class RateConditionTest {
                 .of(ThresholdCondition.greaterThanOrEquals("latency", 500d).build())
                 .duration(1, TimeUnit.MINUTES)
                 .lowerThan(40d)
+                .projection(Projections.property("api"))
                 .build();
 
+        // Check condition
         Assert.assertNotNull(condition);
         Assert.assertEquals(40d, condition.getThreshold(), 0);
         Assert.assertEquals(RateCondition.Operator.LT, condition.getOperator());
@@ -54,10 +58,16 @@ public class RateConditionTest {
         Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
         Assert.assertEquals(60 * 1000, condition.getWindowTime());
 
+        // Check comparison
         Assert.assertNotNull(condition.getComparison());
         Assert.assertEquals(ThresholdCondition.class, condition.getComparison().getClass());
         Assert.assertEquals("latency", ((ThresholdCondition)condition.getComparison()).getProperty());
         Assert.assertEquals(ThresholdCondition.Operator.GTE, ((ThresholdCondition)condition.getComparison()).getOperator());
         Assert.assertEquals((Double) 500d, ((ThresholdCondition)condition.getComparison()).getThreshold());
+
+        // Check projection
+        Assert.assertNotNull(condition.getProjections());
+        Assert.assertEquals(1, condition.getProjections().size());
+        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 }

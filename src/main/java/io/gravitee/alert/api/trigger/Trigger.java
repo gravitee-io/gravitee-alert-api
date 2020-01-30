@@ -18,6 +18,7 @@ package io.gravitee.alert.api.trigger;
 import com.fasterxml.jackson.annotation.*;
 import io.gravitee.alert.api.condition.Condition;
 import io.gravitee.alert.api.condition.Filter;
+import io.gravitee.alert.api.condition.projection.Projection;
 import io.gravitee.common.utils.UUID;
 import io.gravitee.notifier.api.Notification;
 
@@ -199,6 +200,7 @@ public class Trigger implements Serializable {
         private Map<String, Map<String, String>> metadata;
         private List<Notification> notifications = new ArrayList<>();
         private List<Condition> conditions = new ArrayList<>();
+        private List<Projection> projections = new ArrayList<>();
         private List<Filter> filters = new ArrayList<>();
         private boolean enabled = true;
         private Dampening dampening;
