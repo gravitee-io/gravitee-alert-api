@@ -17,21 +17,24 @@ package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.gravitee.alert.api.condition.projection.Projection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class MissingDataCondition extends WindowBasedCondition implements Filter {
+public class MissingDataCondition extends ProjectionsAwareCondition implements Filter {
 
     @JsonCreator
     private MissingDataCondition(@JsonProperty(value = "duration", required = true) long duration,
-                                 @JsonProperty(value = "timeUnit") TimeUnit timeUnit) {
-        super(Type.MISSING_DATA, timeUnit, duration);
+                                 @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+                                 @JsonProperty(value = "projections") List<Projection> projections) {
+        super(Type.MISSING_DATA, timeUnit, duration, projections);
     }
-
 
     public static DurationBuilder duration(long duration, TimeUnit timeUnit) {
         return new DurationBuilder(duration, timeUnit);
@@ -46,6 +49,8 @@ public class MissingDataCondition extends WindowBasedCondition implements Filter
         private final long duration;
         private final TimeUnit timeUnit;
 
+        private List<Projection> projections;
+
         DurationBuilder(long duration, TimeUnit timeUnit) {
             this.duration = duration;
             this.timeUnit = timeUnit;
@@ -55,8 +60,18 @@ public class MissingDataCondition extends WindowBasedCondition implements Filter
             this(duration, null);
         }
 
+        public DurationBuilder projection(Projection projection) {
+            if (projections == null) {
+                projections = new ArrayList<>();
+            }
+
+            projections.add(projection);
+
+            return this;
+        }
+
         public MissingDataCondition build() {
-            return new MissingDataCondition(duration, timeUnit);
+            return new MissingDataCondition(duration, timeUnit, projections);
         }
     }
 }

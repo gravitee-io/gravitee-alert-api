@@ -13,28 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.condition;
-
-import io.gravitee.alert.api.condition.projection.Projection;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+package io.gravitee.alert.api.condition.projection;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public abstract class ComparisonBasedAccumulatorCondition extends ProjectionsAwareCondition {
+public abstract class AbstractProjection implements Projection {
 
-    private final SingleValueCondition comparison;
+    private final Type type;
 
-    ComparisonBasedAccumulatorCondition(Type type, SingleValueCondition comparison, TimeUnit timeUnit, long duration, List<Projection> projections) {
-        super(type, timeUnit, duration, projections);
-
-        this.comparison = comparison;
+    AbstractProjection(Type type) {
+        this.type = type;
     }
 
-    public SingleValueCondition getComparison() {
-        return comparison;
+    @Override
+    public Type getType() {
+        return type;
     }
 }

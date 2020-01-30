@@ -15,6 +15,8 @@
  */
 package io.gravitee.alert.api.condition;
 
+import io.gravitee.alert.api.condition.projection.Projections;
+import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,6 +45,7 @@ public class AggregationConditionTest {
                 .avg("latency")
                 .duration(1, TimeUnit.MINUTES)
                 .lowerThan(40d)
+                .projection(Projections.property("api"))
                 .build();
 
         Assert.assertNotNull(condition);
@@ -54,6 +57,11 @@ public class AggregationConditionTest {
         Assert.assertEquals(1, condition.getDuration());
         Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
         Assert.assertEquals(60 * 1000, condition.getWindowTime());
+
+        // Check projection
+        Assert.assertNotNull(condition.getProjections());
+        Assert.assertEquals(1, condition.getProjections().size());
+        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 
     /**

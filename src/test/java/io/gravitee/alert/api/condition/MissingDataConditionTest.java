@@ -15,6 +15,8 @@
  */
 package io.gravitee.alert.api.condition;
 
+import io.gravitee.alert.api.condition.projection.Projections;
+import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,11 +35,20 @@ public class MissingDataConditionTest {
      */
     @Test
     public void shouldBuildMissingDataCondition() {
-        MissingDataCondition condition = MissingDataCondition.duration(10, TimeUnit.SECONDS).build();
+        MissingDataCondition condition = MissingDataCondition
+                .duration(10, TimeUnit.SECONDS)
+                .projection(Projections.property("api"))
+                .build();
 
+        // Check condition
         Assert.assertNotNull(condition);
         Assert.assertEquals(10, condition.getDuration());
         Assert.assertEquals(TimeUnit.SECONDS, condition.getTimeUnit());
+
+        // Check projection
+        Assert.assertNotNull(condition.getProjections());
+        Assert.assertEquals(1, condition.getProjections().size());
+        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 
 }
