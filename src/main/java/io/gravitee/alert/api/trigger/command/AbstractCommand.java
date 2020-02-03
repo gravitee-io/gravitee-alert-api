@@ -13,40 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.trigger;
-
-import io.gravitee.alert.api.trigger.command.Command;
-import io.gravitee.common.component.LifecycleComponent;
+package io.gravitee.alert.api.trigger.command;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface TriggerProvider extends LifecycleComponent<TriggerProvider> {
+public abstract class AbstractCommand implements Command {
 
-    void register(Trigger trigger);
+    protected String trigger;
 
-    void unregister(Trigger trigger);
-
-    default void addListener(Listener listener) {
+    public AbstractCommand(String trigger) {
+        this.trigger = trigger;
     }
 
-    interface Listener {
-
-    }
-
-    interface OnConnectionListener extends Listener {
-
-        void doOnConnect();
-    }
-
-    interface OnDisconnectionListener extends Listener {
-
-        void doOnDisconnect();
-    }
-
-    interface OnCommandListener extends Listener {
-
-        void doOnCommand(Command command);
+    @Override
+    public String getTrigger() {
+        return trigger;
     }
 }
