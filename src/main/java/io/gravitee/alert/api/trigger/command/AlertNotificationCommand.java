@@ -38,6 +38,8 @@ public class AlertNotificationCommand extends AbstractCommand {
 
         private final long timestamp;
 
+        private String message;
+
         public Alert(String trigger, long timestamp) {
             this.trigger = trigger;
             this.timestamp = timestamp;
@@ -49,6 +51,14 @@ public class AlertNotificationCommand extends AbstractCommand {
 
         public long getTimestamp() {
             return timestamp;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }
