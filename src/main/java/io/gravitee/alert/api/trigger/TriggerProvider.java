@@ -16,6 +16,7 @@
 package io.gravitee.alert.api.trigger;
 
 import io.gravitee.alert.api.trigger.command.Command;
+import io.gravitee.alert.api.trigger.command.Handler;
 import io.gravitee.common.component.LifecycleComponent;
 
 /**
@@ -48,5 +49,10 @@ public interface TriggerProvider extends LifecycleComponent<TriggerProvider> {
     interface OnCommandListener extends Listener {
 
         void doOnCommand(Command command);
+    }
+
+    interface OnCommandResultListener extends Listener {
+
+        <T> void doOnCommand(Command command, Handler<T> resultHandler);
     }
 }

@@ -15,36 +15,21 @@
  */
 package io.gravitee.alert.api.trigger.command;
 
+import java.util.Map;
+
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class AlertNotificationCommand implements Command {
+public class ResolvePropertyCommand implements Command {
 
-    private final String trigger;
+    private final Map<String, String> properties;
 
-    private final long timestamp;
-
-    private String message;
-
-    public AlertNotificationCommand(String trigger, long timestamp) {
-        this.trigger = trigger;
-        this.timestamp = timestamp;
+    public ResolvePropertyCommand(Map<String, String> properties) {
+        this.properties = properties;
     }
 
-    public String getTrigger() {
-        return trigger;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public Map<String, String> getProperties() {
+        return properties;
     }
 }
