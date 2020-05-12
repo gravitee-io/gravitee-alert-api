@@ -21,5 +21,4 @@ package io.gravitee.alert.api.trigger.command;
  */
 public interface Command {
 
-    String getTrigger();
 }

@@ -16,19 +16,15 @@
 package io.gravitee.alert.api.trigger.command;
 
 /**
+ * A generic command result handler.
+ *
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
+ *
+ * @param <T> Type of the result
  */
-public abstract class AbstractCommand implements Command {
+@FunctionalInterface
+public interface Handler<T> {
 
-    protected String trigger;
-
-    public AbstractCommand(String trigger) {
-        this.trigger = trigger;
-    }
-
-    @Override
-    public String getTrigger() {
-        return trigger;
-    }
+    void handle(T result);
 }
