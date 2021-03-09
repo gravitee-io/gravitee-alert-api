@@ -15,6 +15,7 @@
  */
 package io.gravitee.alert.api.trigger;
 
+import io.gravitee.alert.api.Listener;
 import io.gravitee.alert.api.trigger.command.Command;
 import io.gravitee.alert.api.trigger.command.Handler;
 import io.gravitee.common.component.LifecycleComponent;
@@ -32,7 +33,8 @@ public interface TriggerProvider extends LifecycleComponent<TriggerProvider> {
     default void addListener(Listener listener) {
     }
 
-    interface Listener {
+    // Note: this interface is useless but is kept for backward-compatibility
+    interface Listener extends io.gravitee.alert.api.Listener {
 
     }
 
