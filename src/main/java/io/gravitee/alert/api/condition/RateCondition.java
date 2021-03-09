@@ -37,6 +37,8 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     private final double threshold;
 
+    private final int sampleSize;
+
     @JsonCreator
     private RateCondition(
             @JsonProperty(value = "operator", required = true) Operator operator,
@@ -44,11 +46,13 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
             @JsonProperty(value = "comparison", required = true) SingleValueCondition comparison,
             @JsonProperty(value = "duration", required = true) long duration,
             @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+            @JsonProperty(value = "sampleSize") Integer sampleSize,
             @JsonProperty(value = "projections") List<Projection> projections) {
         super(Type.RATE, comparison, timeUnit, duration, projections);
 
         this.operator = operator;
         this.threshold = threshold;
+        this.sampleSize = sampleSize == null ? 1 : sampleSize;
     }
 
     public static ComparisonBuilder of(SingleValueCondition comparison) {
@@ -61,6 +65,10 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     public double getThreshold() {
         return threshold;
+    }
+
+    public int getSampleSize() {
+        return sampleSize;
     }
 
     public static class ComparisonBuilder {
@@ -118,6 +126,8 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
         private final TimeUnit timeUnit;
         private final Operator operator;
         private final Double threshold;
+
+        private int sampleSize;
         private List<Projection> projections;
 
         ProjectionBuilder(SingleValueCondition comparison, Operator operator, Double threshold, long duration, TimeUnit timeUnit) {
@@ -126,6 +136,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
             this.timeUnit = timeUnit;
             this.operator = operator;
             this.threshold = threshold;
+            this.sampleSize = 1;
         }
 
         public ProjectionBuilder projection(Projection projection) {
@@ -138,6 +149,11 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
             return this;
         }
 
+        public ProjectionBuilder sampleSize(int sampleSize) {
+            this.sampleSize = sampleSize;
+            return this;
+        }
+
         public RateCondition build() {
             return new RateCondition(
                     operator,
@@ -145,6 +161,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
                     comparison,
                     duration,
                     timeUnit,
+                    sampleSize,
                     projections);
         }
     }
