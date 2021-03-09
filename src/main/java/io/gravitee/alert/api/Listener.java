@@ -13,29 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.gravitee.alert.api.event;
-
-import io.gravitee.alert.api.Listener;
-import io.gravitee.common.component.LifecycleComponent;
+package io.gravitee.alert.api;
 
 /**
- * @author David BRASSELY (david.brassely at graviteesource.com)
+ * @author Jeoffrey HAEYAERT (jeoffrey.haeyaert at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface EventProducer extends LifecycleComponent<EventProducer> {
-
-    void send(Event event);
-
-    default void addListener(Listener listener) {
-    }
-
-    interface OnConnectionListener extends Listener {
-
-        void doOnConnect();
-    }
-
-    interface OnDisconnectionListener extends Listener {
-
-        void doOnDisconnect();
-    }
+public interface Listener {
 }
