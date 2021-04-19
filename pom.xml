@@ -35,7 +35,7 @@
 
     <properties>
         <gravitee-common.version>1.16.2</gravitee-common.version>
-        <gravitee-notifier-api.version>1.4.0</gravitee-notifier-api.version>
+        <gravitee-notifier-api.version>1.4.1-SNAPSHOT</gravitee-notifier-api.version>
     </properties>
 
     <dependencies>
