@@ -17,12 +17,20 @@ package io.gravitee.alert.api.trigger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gravitee.alert.api.condition.*;
+import io.gravitee.notifier.api.Period;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+
+import static java.time.temporal.ChronoUnit.HOURS;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -233,5 +241,53 @@ public class TriggerTest {
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
         Assert.assertEquals(trigger, trigger2);
+    }
+
+    @Test
+    public void canNotify_included() {
+
+        final long now = System.currentTimeMillis();
+
+        final Period period = new Period.Builder()
+                .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
+                .endHour(LocalTime.of(23, 59, 59).toSecondOfDay())
+                .build();
+
+        Trigger trigger = Trigger
+                .on("my-source")
+                .name("shouldExportToJson_rmissingDataCondition")
+                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
+                .notificationPeriod(period)
+                .build();
+
+        assertTrue(trigger.canNotify(now));
+    }
+
+    @Test
+    public void canNotify_notIncluded() {
+
+        final long current = System.currentTimeMillis();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime hourBefore = now.minus(1, HOURS);
+
+        if (now.getDayOfWeek() != hourBefore.getDayOfWeek()) {
+            // Be sure we are on the same day (I know some people capable to run this test at midnight! ;-) ).
+            now = now.plus(1, HOURS);
+            hourBefore = hourBefore.plus(1, HOURS);
+        }
+
+        final Period period = new Period.Builder()
+                .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
+                .endHour(LocalTime.of(hourBefore.getHour(), 59, 59).toSecondOfDay())
+                .build();
+
+        Trigger trigger = Trigger
+                .on("my-source")
+                .name("shouldExportToJson_rmissingDataCondition")
+                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
+                .notificationPeriod(period)
+                .build();
+
+        assertFalse(trigger.canNotify(current));
     }
 }

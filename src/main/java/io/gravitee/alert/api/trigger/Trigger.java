@@ -26,6 +26,7 @@ import io.gravitee.notifier.api.Period;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.*;
 
@@ -212,7 +213,7 @@ public class Trigger implements Serializable {
             return true;
         }
 
-        final LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneOffset.UTC);
+        final LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
 
         return notificationPeriods.stream().anyMatch(period -> period.isIncluded(localDateTime));
     }
