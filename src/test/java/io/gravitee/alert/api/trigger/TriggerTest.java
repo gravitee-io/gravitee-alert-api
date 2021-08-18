@@ -265,8 +265,6 @@ public class TriggerTest {
 
     @Test
     public void canNotify_notIncluded() {
-
-        final long current = System.currentTimeMillis();
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime hourBefore = now.minus(1, HOURS);
 
@@ -288,6 +286,6 @@ public class TriggerTest {
                 .notificationPeriod(period)
                 .build();
 
-        assertFalse(trigger.canNotify(current));
+        assertFalse(trigger.canNotify(now.toEpochSecond(ZoneOffset.UTC) * 1000));
     }
 }
