@@ -23,6 +23,10 @@ import java.util.Map;
  */
 public interface Event extends Comparable<Event> {
 
+    String PROPERTY_INSTALLATION= "installation";
+    String PROPERTY_ORGANIZATION= "organization";
+    String PROPERTY_ENVIRONMENT = "environment";
+
     /**
      * Event identifier.
      *
