@@ -21,7 +21,9 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -31,6 +33,7 @@ import java.util.function.Supplier;
 public class DefaultEvent extends AbstractEvent implements Serializable {
 
     private static final long serialVersionUID = 1379928246655907008L;
+    private static final String ALL = "*";
 
     private Map<String, String> context;
     private Map<String, Object> properties;
@@ -136,6 +139,52 @@ public class DefaultEvent extends AbstractEvent implements Serializable {
             Object value = supplier.get();
             if (value != null) {
                 property(key, value);
+            }
+
+            return this;
+        }
+
+        public Builder installation(String installation) {
+            property(PROPERTY_INSTALLATION, installation);
+
+            return this;
+        }
+
+        public Builder environment(String environment) {
+            if (environment == null || environment.isEmpty()) {
+                property(PROPERTY_ENVIRONMENT, ALL);
+            } else {
+                property(PROPERTY_ENVIRONMENT, environment);
+            }
+
+            return this;
+        }
+
+        public Builder environments(Set<String> environments) {
+            if (environments == null || environments.isEmpty()) {
+                property(PROPERTY_ENVIRONMENT, ALL);
+            } else {
+                property(PROPERTY_ENVIRONMENT, environments.stream().collect(Collectors.joining(",")));
+            }
+
+            return this;
+        }
+
+        public Builder organization(String organization) {
+            if (organization == null || organization.isEmpty()) {
+                property(PROPERTY_ORGANIZATION, ALL);
+            } else {
+                property(PROPERTY_ORGANIZATION, organization);
+            }
+
+            return this;
+        }
+
+        public Builder organizations(Set<String> organizations) {
+            if (organizations == null || organizations.isEmpty()) {
+                property(PROPERTY_ORGANIZATION, ALL);
+            } else {
+                property(PROPERTY_ORGANIZATION, organizations.stream().collect(Collectors.joining(",")));
             }
 
             return this;
