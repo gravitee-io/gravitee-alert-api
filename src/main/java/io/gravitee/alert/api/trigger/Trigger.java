@@ -21,8 +21,13 @@ import io.gravitee.alert.api.condition.Filter;
 import io.gravitee.alert.api.condition.projection.Projection;
 import io.gravitee.common.utils.UUID;
 import io.gravitee.notifier.api.Notification;
+import io.gravitee.notifier.api.Period;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 
 /**
@@ -47,14 +52,16 @@ public class Trigger implements Serializable {
     private Map<String, Map<String, String>> metadata;
     private boolean enabled;
     private List<Filter> filters;
+    private List<Period> notificationPeriods;
 
     @JsonCreator
-    protected Trigger (
+    protected Trigger(
             @JsonProperty(value = "id", required = true) String id,
             @JsonProperty(value = "name", required = true) String name,
             @JsonProperty(value = "severity") Severity severity,
             @JsonProperty(value = "source", required = true) String source,
-            @JsonProperty(value = "enabled") boolean enabled
+            @JsonProperty(value = "enabled") boolean enabled,
+            @JsonProperty(value = "notificationPeriods") List<Period> notificationPeriods
     ) {
         // Default private constructor to force builder usage.
         this.source = source;
@@ -62,6 +69,11 @@ public class Trigger implements Serializable {
         this.name = name;
         this.severity = (severity == null) ? Severity.INFO : severity;
         this.enabled = enabled;
+        this.notificationPeriods = notificationPeriods;
+    }
+
+    protected Trigger(String id, String name, Severity severity, String source, boolean enabled) {
+        this(id, name, severity, source, enabled, new ArrayList<>());
     }
 
     public String getId() {
@@ -152,6 +164,14 @@ public class Trigger implements Serializable {
         this.description = description;
     }
 
+    public List<Period> getNotificationPeriods() {
+        return notificationPeriods;
+    }
+
+    public void setNotificationPeriods(List<Period> notificationPeriods) {
+        this.notificationPeriods = notificationPeriods;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -174,12 +194,29 @@ public class Trigger implements Serializable {
                 ", dampening='" + dampening + '\'' +
                 ", notifications=" + notifications +
                 ", conditions=" + conditions +
+                ", notificationPeriods=" + notificationPeriods +
                 ", filters=" + filters +
                 ", enabled=" + enabled +
                 '}';
     }
 
+    /**
+     * Indicates if the specified timestamp matches with one of the notification time periods defined for this trigger.
+     *
+     * @param timestamp the timestamp to check against the notification time periods.
+     * @return <code>true</code> if the timestamp matches one of the notification time periods, <code>false</code> else.
+     */
+    public boolean canNotify(long timestamp) {
+        final List<Period> notificationPeriods = this.getNotificationPeriods();
 
+        if (notificationPeriods == null || notificationPeriods.isEmpty()) {
+            return true;
+        }
+
+        final LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
+
+        return notificationPeriods.stream().anyMatch(period -> period.isIncluded(localDateTime));
+    }
 
     public static Builder on(String source) {
         return new Builder(source);
@@ -202,6 +239,7 @@ public class Trigger implements Serializable {
         private List<Condition> conditions = new ArrayList<>();
         private List<Projection> projections = new ArrayList<>();
         private List<Filter> filters = new ArrayList<>();
+        private List<Period> notificationPeriods = new ArrayList<>();
         private boolean enabled = true;
         private Dampening dampening;
 
@@ -282,10 +320,27 @@ public class Trigger implements Serializable {
             return this;
         }
 
+        public Trigger.Builder notificationPeriod(Period period) {
+            if (notificationPeriods == null) {
+                notificationPeriods = new ArrayList<>();
+            }
+
+            notificationPeriods.add(period);
+            return this;
+        }
+
+        public Trigger.Builder notificationPeriods(List<Period> periods) {
+            if (periods != null) {
+                periods.forEach(this::notificationPeriod);
+            }
+
+            return this;
+        }
+
         public Trigger build() {
             final Trigger trigger = new Trigger(
                     (id == null) ? UUID.random().toString() : id,
-                    name, severity, source, enabled);
+                    name, severity, source, enabled, notificationPeriods);
 
             trigger.setDescription(description);
             trigger.setNotifications(notifications);
