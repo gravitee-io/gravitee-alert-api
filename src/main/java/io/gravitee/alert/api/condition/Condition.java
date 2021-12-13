@@ -19,8 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.gravitee.alert.api.condition.projection.Projection;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -51,6 +53,8 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface Condition extends Serializable {
+
+    List<Projection> getProjections();
 
     enum Type {
         STRING, THRESHOLD, THRESHOLD_RANGE, RATE, FREQUENCY, AGGREGATION, COMPARE, STRING_COMPARE, MISSING_DATA

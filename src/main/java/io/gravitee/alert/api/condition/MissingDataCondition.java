@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class MissingDataCondition extends ProjectionsAwareCondition implements Filter {
+public class MissingDataCondition extends WindowBasedCondition implements Filter {
 
     @JsonCreator
     private MissingDataCondition(@JsonProperty(value = "duration", required = true) long duration,

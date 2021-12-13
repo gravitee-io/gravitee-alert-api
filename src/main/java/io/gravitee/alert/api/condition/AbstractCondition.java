@@ -15,6 +15,11 @@
  */
 package io.gravitee.alert.api.condition;
 
+import io.gravitee.alert.api.condition.projection.Projection;
+
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
@@ -22,13 +27,24 @@ package io.gravitee.alert.api.condition;
 public abstract class AbstractCondition implements Condition {
 
     private final Type type;
+    private final List<Projection> projections;
 
     AbstractCondition(Type type) {
+        this(type, Collections.emptyList());
+    }
+
+    AbstractCondition(Type type, List<Projection> projections) {
         this.type = type;
+        this.projections = projections;
     }
 
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public List<Projection> getProjections() {
+        return projections;
     }
 }

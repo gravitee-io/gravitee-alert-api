@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public abstract class ComparisonBasedAccumulatorCondition extends ProjectionsAwareCondition {
+public abstract class ComparisonBasedAccumulatorCondition extends WindowBasedCondition {
 
     private final SingleValueCondition comparison;
 
