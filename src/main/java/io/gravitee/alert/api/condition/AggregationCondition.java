@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class AggregationCondition extends ProjectionsAwareCondition {
+public class AggregationCondition extends WindowBasedCondition {
 
     public enum Operator {
         LT, LTE, GTE, GT

@@ -17,6 +17,9 @@ package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.gravitee.alert.api.condition.projection.Projection;
+
+import java.util.List;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -41,8 +44,9 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
             @JsonProperty(value = "property", required = true) String property,
             @JsonProperty(value = "operator", required = true) Operator operator,
             @JsonProperty(value = "property2", required = true) String property2,
-            @JsonProperty(value = "ignoreCase") boolean ignoreCase) {
-        super(Type.STRING_COMPARE);
+            @JsonProperty(value = "ignoreCase") boolean ignoreCase,
+            @JsonProperty(value = "projections") List<Projection> projections) {
+        super(Type.STRING_COMPARE, projections);
 
         this.property = property;
         this.operator = operator;
@@ -104,6 +108,7 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
         private final Operator operator;
         private final String property2;
         private final boolean ignoreCase;
+        private  List<Projection> projections;
 
         FilterBuilder(String property, Operator operator, String property2, boolean ignoreCase) {
             this.property = property;
@@ -112,8 +117,13 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
             this.ignoreCase = ignoreCase;
         }
 
+        public FilterBuilder projections(List<Projection> projections) {
+            this.projections = projections;
+            return this;
+        }
+
         public StringCompareCondition build() {
-            return new StringCompareCondition(property, operator, property2, ignoreCase);
+            return new StringCompareCondition(property, operator, property2, ignoreCase, projections);
         }
     }
 

@@ -16,7 +16,10 @@
 package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.gravitee.alert.api.condition.projection.Projection;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,8 +32,11 @@ public class WindowBasedCondition extends AbstractCondition {
     private final TimeUnit timeUnit;
 
     WindowBasedCondition(Type type, TimeUnit timeUnit, long duration) {
-        super(type);
+        this(type, timeUnit, duration, Collections.emptyList());
+    }
 
+    WindowBasedCondition(Type type, TimeUnit timeUnit, long duration, List<Projection> projections) {
+        super(type, projections);
         this.duration = duration;
         this.timeUnit = timeUnit;
     }
