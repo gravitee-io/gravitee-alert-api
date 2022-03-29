@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition.projection;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.event.Event;
-
 import java.util.Objects;
 
 /**
@@ -32,7 +31,6 @@ public class PropertyProjection extends AbstractProjection {
     @JsonCreator
     PropertyProjection(@JsonProperty(value = "property", required = true) String property) {
         super(Type.PROPERTY);
-
         Objects.requireNonNull(property, "Property can not be null");
 
         this.property = property;

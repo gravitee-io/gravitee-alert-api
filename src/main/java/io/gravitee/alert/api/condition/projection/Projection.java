@@ -20,27 +20,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.gravitee.alert.api.event.Event;
-
 import java.io.Serializable;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "type")
-@JsonSubTypes({
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
+@JsonSubTypes(
+    {
         @JsonSubTypes.Type(value = PropertyProjection.class, name = "PROPERTY"),
-        @JsonSubTypes.Type(value = PropertyProjection.class, name = "property")
-})
+        @JsonSubTypes.Type(value = PropertyProjection.class, name = "property"),
+    }
+)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface Projection extends Serializable {
-
     enum Type {
-        PROPERTY
+        PROPERTY,
     }
 
     Type getType();

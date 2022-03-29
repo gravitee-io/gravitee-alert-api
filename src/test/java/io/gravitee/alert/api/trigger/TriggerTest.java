@@ -15,22 +15,21 @@
  */
 package io.gravitee.alert.api.trigger;
 
+import static java.time.temporal.ChronoUnit.HOURS;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gravitee.alert.api.condition.*;
 import io.gravitee.notifier.api.Period;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-
-import static java.time.temporal.ChronoUnit.HOURS;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -40,7 +39,7 @@ public class TriggerTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void shouldNotBuild_noCondition() {
         Trigger.on("my-source").build();
     }
@@ -48,10 +47,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_noSeverity() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_stringCondition")
-                .condition(StringCondition.equals("a-field", "a-value").build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_stringCondition")
+            .condition(StringCondition.equals("a-field", "a-value").build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -67,11 +66,11 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_stringCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_stringCondition")
-                .condition(StringCondition.equals("a-field", "a-value").build())
-                .severity(Trigger.Severity.WARNING)
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_stringCondition")
+            .condition(StringCondition.equals("a-field", "a-value").build())
+            .severity(Trigger.Severity.WARNING)
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -85,10 +84,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_thresholdCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_thresholdCondition")
-                .condition(ThresholdCondition.greaterThan("a-field", 100d).build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_thresholdCondition")
+            .condition(ThresholdCondition.greaterThan("a-field", 100d).build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -102,11 +101,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_thresholdRangeCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_thresholdRangeCondition")
-                .condition(ThresholdRangeCondition
-                        .between("a-field", 100d, 500d).build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_thresholdRangeCondition")
+            .condition(ThresholdRangeCondition.between("a-field", 100d, 500d).build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -120,11 +118,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_compareCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_compareCondition")
-                .condition(CompareCondition
-                        .lowerThan("a-field", 0.1d, "b-field").build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_compareCondition")
+            .condition(CompareCondition.lowerThan("a-field", 0.1d, "b-field").build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -138,11 +135,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_stringCompareCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_stringCompareCondition")
-                .condition(StringCompareCondition
-                        .equals("a-field", "b-field", false).build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_stringCompareCondition")
+            .condition(StringCompareCondition.equals("a-field", "b-field", false).build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -156,16 +152,11 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_aggregationCondition_count() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_thresholdAccumulateCondition_count")
-                .condition(
-                        AggregationCondition
-                            .count()
-                            .duration(1, TimeUnit.MINUTES)
-                            .greaterThan(50d)
-                            .build())
-                .filter(StringCondition.equals("api", "my-api").build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_thresholdAccumulateCondition_count")
+            .condition(AggregationCondition.count().duration(1, TimeUnit.MINUTES).greaterThan(50d).build())
+            .filter(StringCondition.equals("api", "my-api").build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -179,20 +170,11 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_aggregationCondition_average() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_thresholdAccumulateCondition_average")
-                .condition(
-                        AggregationCondition
-                                .avg("response-time")
-                                .duration(1, TimeUnit.MINUTES)
-                                .greaterThan(50d)
-                                .build())
-                .filters(
-                        Arrays.asList(
-                                StringCondition.equals("api", "my-api").build(),
-                                ThresholdCondition.greaterThan("status", 400d).build()
-                        ))
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_thresholdAccumulateCondition_average")
+            .condition(AggregationCondition.avg("response-time").duration(1, TimeUnit.MINUTES).greaterThan(50d).build())
+            .filters(Arrays.asList(StringCondition.equals("api", "my-api").build(), ThresholdCondition.greaterThan("status", 400d).build()))
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -206,16 +188,12 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_rateCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_rateCondition")
-                .condition(
-                        RateCondition
-                                .of(ThresholdCondition.greaterThan("response-time", 100d).build())
-                                .duration(10000)
-                                .greaterThan(50d)
-                                .build()
-                )
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_rateCondition")
+            .condition(
+                RateCondition.of(ThresholdCondition.greaterThan("response-time", 100d).build()).duration(10000).greaterThan(50d).build()
+            )
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -229,10 +207,10 @@ public class TriggerTest {
     @Test
     public void shouldExportToJson_missingDataCondition() throws IOException {
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_rmissingDataCondition")
-                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_rmissingDataCondition")
+            .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
+            .build();
 
         String json = mapper.writeValueAsString(trigger);
 
@@ -245,20 +223,19 @@ public class TriggerTest {
 
     @Test
     public void canNotify_included() {
-
         final long now = System.currentTimeMillis();
 
         final Period period = new Period.Builder()
-                .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
-                .endHour(LocalTime.of(23, 59, 59).toSecondOfDay())
-                .build();
+            .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
+            .endHour(LocalTime.of(23, 59, 59).toSecondOfDay())
+            .build();
 
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_rmissingDataCondition")
-                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
-                .notificationPeriod(period)
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_rmissingDataCondition")
+            .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
+            .notificationPeriod(period)
+            .build();
 
         assertTrue(trigger.canNotify(now));
     }
@@ -275,16 +252,16 @@ public class TriggerTest {
         }
 
         final Period period = new Period.Builder()
-                .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
-                .endHour(LocalTime.of(hourBefore.getHour(), 59, 59).toSecondOfDay())
-                .build();
+            .beginHour(LocalTime.of(0, 0, 0).toSecondOfDay())
+            .endHour(LocalTime.of(hourBefore.getHour(), 59, 59).toSecondOfDay())
+            .build();
 
         Trigger trigger = Trigger
-                .on("my-source")
-                .name("shouldExportToJson_rmissingDataCondition")
-                .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
-                .notificationPeriod(period)
-                .build();
+            .on("my-source")
+            .name("shouldExportToJson_rmissingDataCondition")
+            .condition(MissingDataCondition.duration(10, TimeUnit.SECONDS).build())
+            .notificationPeriod(period)
+            .build();
 
         assertFalse(trigger.canNotify(now.toEpochSecond(ZoneOffset.UTC) * 1000));
     }

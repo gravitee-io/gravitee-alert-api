@@ -31,8 +31,7 @@ public class StringCompareConditionTest {
      */
     @Test
     public void shouldBuildStringCondition_lowerThan() {
-        StringCompareCondition condition = StringCompareCondition
-                .equals("latency", "latency2").build();
+        StringCompareCondition condition = StringCompareCondition.equals("latency", "latency2").build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals("latency", condition.getProperty());

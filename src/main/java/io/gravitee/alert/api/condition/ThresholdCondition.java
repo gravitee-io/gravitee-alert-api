@@ -17,7 +17,6 @@ package io.gravitee.alert.api.condition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 /**
@@ -27,7 +26,10 @@ import java.util.List;
 public class ThresholdCondition extends AbstractCondition implements Filter {
 
     public enum Operator {
-        LT, LTE, GTE, GT
+        LT,
+        LTE,
+        GTE,
+        GT,
     }
 
     private final String property;
@@ -38,11 +40,11 @@ public class ThresholdCondition extends AbstractCondition implements Filter {
 
     @JsonCreator
     private ThresholdCondition(
-            @JsonProperty(value = "property", required = true) String property,
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "threshold", required = true) Double threshold) {
+        @JsonProperty(value = "property", required = true) String property,
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "threshold", required = true) Double threshold
+    ) {
         super(Type.THRESHOLD);
-
         this.property = property;
         this.operator = operator;
         this.threshold = threshold;

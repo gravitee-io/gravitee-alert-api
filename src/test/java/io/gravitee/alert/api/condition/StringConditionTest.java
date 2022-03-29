@@ -26,9 +26,7 @@ public class StringConditionTest {
 
     @Test
     public void shouldBuildStringCondition() {
-        StringCondition condition = StringCondition
-                .equals("my-field", "a-value")
-                .build();
+        StringCondition condition = StringCondition.equals("my-field", "a-value").build();
 
         Assert.assertNotNull(condition);
     }

@@ -30,7 +30,6 @@ public class Context extends HashMap<String, String> {
     public static final String CONTEXT_NODE_APPLICATION = "node.application";
     public static final String CONTEXT_TENANT = "tenant";
     public static final String CONTEXT_INSTALLATION = "installation";
-//    public static final String CONTEXT_GATEWAY_PORT = "gateway.port";
-
+    //    public static final String CONTEXT_GATEWAY_PORT = "gateway.port";
 
 }

@@ -16,7 +16,6 @@
 package io.gravitee.alert.api.condition;
 
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,9 +27,14 @@ public abstract class ComparisonBasedAccumulatorCondition extends WindowBasedCon
 
     private final SingleValueCondition comparison;
 
-    ComparisonBasedAccumulatorCondition(Type type, SingleValueCondition comparison, TimeUnit timeUnit, long duration, List<Projection> projections) {
+    ComparisonBasedAccumulatorCondition(
+        Type type,
+        SingleValueCondition comparison,
+        TimeUnit timeUnit,
+        long duration,
+        List<Projection> projections
+    ) {
         super(type, timeUnit, duration, projections);
-
         this.comparison = comparison;
     }
 

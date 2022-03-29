@@ -17,10 +17,9 @@ package io.gravitee.alert.api.condition;
 
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
+import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * The rate / percentage calculation is based on a time window and must be define with a duration.
@@ -44,12 +43,12 @@ public class RateConditionTest {
     @Test
     public void shouldBuildRateCondition_lowerThan() {
         RateCondition condition = RateCondition
-                .of(ThresholdCondition.greaterThanOrEquals("latency", 500d).build())
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .projection(Projections.property("api"))
-                .sampleSize(20)
-                .build();
+            .of(ThresholdCondition.greaterThanOrEquals("latency", 500d).build())
+            .duration(1, TimeUnit.MINUTES)
+            .lowerThan(40d)
+            .projection(Projections.property("api"))
+            .sampleSize(20)
+            .build();
 
         // Check condition
         Assert.assertNotNull(condition);
@@ -63,9 +62,9 @@ public class RateConditionTest {
         // Check comparison
         Assert.assertNotNull(condition.getComparison());
         Assert.assertEquals(ThresholdCondition.class, condition.getComparison().getClass());
-        Assert.assertEquals("latency", ((ThresholdCondition)condition.getComparison()).getProperty());
-        Assert.assertEquals(ThresholdCondition.Operator.GTE, ((ThresholdCondition)condition.getComparison()).getOperator());
-        Assert.assertEquals((Double) 500d, ((ThresholdCondition)condition.getComparison()).getThreshold());
+        Assert.assertEquals("latency", ((ThresholdCondition) condition.getComparison()).getProperty());
+        Assert.assertEquals(ThresholdCondition.Operator.GTE, ((ThresholdCondition) condition.getComparison()).getOperator());
+        Assert.assertEquals((Double) 500d, ((ThresholdCondition) condition.getComparison()).getThreshold());
 
         // Check projection
         Assert.assertNotNull(condition.getProjections());
@@ -79,11 +78,11 @@ public class RateConditionTest {
     @Test
     public void shouldBuildRateCondition_defaultSampleSize() {
         RateCondition condition = RateCondition
-                .of(ThresholdCondition.greaterThanOrEquals("latency", 500d).build())
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .projection(Projections.property("api"))
-                .build();
+            .of(ThresholdCondition.greaterThanOrEquals("latency", 500d).build())
+            .duration(1, TimeUnit.MINUTES)
+            .lowerThan(40d)
+            .projection(Projections.property("api"))
+            .build();
 
         // Check condition
         Assert.assertNotNull(condition);

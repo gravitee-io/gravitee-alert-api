@@ -18,7 +18,6 @@ package io.gravitee.alert.api.trigger;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
@@ -40,19 +39,20 @@ public class Dampening implements Serializable {
     private final TimeUnit timeUnit;
 
     public enum Mode {
-        STRICT_COUNT,   // N consecutive true evaluations
-        RELAXED_COUNT,  // N true evaluations out of M total evaluations
-        RELAXED_TIME,   // N true evaluations in T time
-        STRICT_TIME     // Only true evaluations for at least T time
+        STRICT_COUNT, // N consecutive true evaluations
+        RELAXED_COUNT, // N true evaluations out of M total evaluations
+        RELAXED_TIME, // N true evaluations in T time
+        STRICT_TIME, // Only true evaluations for at least T time
     }
 
     @JsonCreator
     private Dampening(
-            @JsonProperty(value = "mode", required = true) final Mode mode,
-            @JsonProperty("trueEvaluations") final Integer trueEvaluations,
-            @JsonProperty("totalEvaluations") final Integer totalEvaluations,
-            @JsonProperty(value = "duration") final Long duration,
-            @JsonProperty(value = "timeUnit") final TimeUnit timeUnit) {
+        @JsonProperty(value = "mode", required = true) final Mode mode,
+        @JsonProperty("trueEvaluations") final Integer trueEvaluations,
+        @JsonProperty("totalEvaluations") final Integer totalEvaluations,
+        @JsonProperty(value = "duration") final Long duration,
+        @JsonProperty(value = "timeUnit") final TimeUnit timeUnit
+    ) {
         this.mode = mode;
         this.trueEvaluations = trueEvaluations;
         this.totalEvaluations = totalEvaluations;

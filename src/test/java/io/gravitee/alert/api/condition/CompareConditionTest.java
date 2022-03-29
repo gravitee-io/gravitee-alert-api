@@ -31,8 +31,7 @@ public class CompareConditionTest {
      */
     @Test
     public void shouldBuildCompareCondition_lowerThan() {
-        CompareCondition condition = CompareCondition
-                .lowerThan("latency", 0.2d, "global.latency").build();
+        CompareCondition condition = CompareCondition.lowerThan("latency", 0.2d, "global.latency").build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 0.2d, condition.getMultiplier());
@@ -46,8 +45,7 @@ public class CompareConditionTest {
      */
     @Test
     public void shouldBuildCompareCondition_lowerThanOrEquals() {
-        CompareCondition condition = CompareCondition
-                .lowerThanOrEquals("latency", 0.2d, "global.latency").build();
+        CompareCondition condition = CompareCondition.lowerThanOrEquals("latency", 0.2d, "global.latency").build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 0.2d, condition.getMultiplier());
@@ -61,8 +59,7 @@ public class CompareConditionTest {
      */
     @Test
     public void shouldBuildCompareCondition_greaterThan() {
-        CompareCondition condition = CompareCondition
-                .greaterThan("latency", 0.2d, "global.latency").build();
+        CompareCondition condition = CompareCondition.greaterThan("latency", 0.2d, "global.latency").build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 0.2d, condition.getMultiplier());
@@ -76,8 +73,7 @@ public class CompareConditionTest {
      */
     @Test
     public void shouldBuildCompareCondition_greaterThanOrEquals() {
-        CompareCondition condition = CompareCondition
-                .greaterThanOrEquals("latency", 0.2d, "global.latency").build();
+        CompareCondition condition = CompareCondition.greaterThanOrEquals("latency", 0.2d, "global.latency").build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 0.2d, condition.getMultiplier());

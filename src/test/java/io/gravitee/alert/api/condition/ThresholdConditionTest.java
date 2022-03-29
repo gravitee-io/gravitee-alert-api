@@ -31,8 +31,7 @@ public class ThresholdConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_lowerThan() {
-        ThresholdCondition condition = ThresholdCondition
-                .lowerThan("latency", 40d).build();
+        ThresholdCondition condition = ThresholdCondition.lowerThan("latency", 40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 40d, condition.getThreshold());

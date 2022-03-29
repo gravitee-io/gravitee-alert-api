@@ -19,6 +19,4 @@ package io.gravitee.alert.api.trigger.command;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface Command {
-
-}
+public interface Command {}

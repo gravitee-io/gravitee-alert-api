@@ -25,7 +25,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ThresholdRangeCondition extends AbstractCondition implements Filter {
 
     public enum Operator {
-        INCLUSIVE, EXCLUSIVE
+        INCLUSIVE,
+        EXCLUSIVE,
     }
 
     private final String property;
@@ -40,13 +41,13 @@ public class ThresholdRangeCondition extends AbstractCondition implements Filter
 
     @JsonCreator
     private ThresholdRangeCondition(
-            @JsonProperty(value = "property", required = true) String property,
-            @JsonProperty(value = "operatorLow", required = true) Operator operatorLow,
-            @JsonProperty(value = "thresholdLow", required = true) Double thresholdLow,
-            @JsonProperty(value = "operatorHigh", required = true) Operator operatorHigh,
-            @JsonProperty(value = "thresholdHigh", required = true) Double thresholdHigh) {
+        @JsonProperty(value = "property", required = true) String property,
+        @JsonProperty(value = "operatorLow", required = true) Operator operatorLow,
+        @JsonProperty(value = "thresholdLow", required = true) Double thresholdLow,
+        @JsonProperty(value = "operatorHigh", required = true) Operator operatorHigh,
+        @JsonProperty(value = "thresholdHigh", required = true) Double thresholdHigh
+    ) {
         super(Condition.Type.THRESHOLD_RANGE);
-
         this.property = property;
         this.operatorLow = operatorLow;
         this.thresholdLow = thresholdLow;
@@ -58,8 +59,13 @@ public class ThresholdRangeCondition extends AbstractCondition implements Filter
         return new FilterBuilder(property, Operator.INCLUSIVE, thresholdLow, Operator.INCLUSIVE, thresholdHigh);
     }
 
-    public static FilterBuilder between(String property, Operator operatorLow, Double thresholdLow,
-                                                  Operator operatorHigh, Double thresholdHigh) {
+    public static FilterBuilder between(
+        String property,
+        Operator operatorLow,
+        Double thresholdLow,
+        Operator operatorHigh,
+        Double thresholdHigh
+    ) {
         return new FilterBuilder(property, operatorLow, thresholdLow, operatorHigh, thresholdHigh);
     }
 

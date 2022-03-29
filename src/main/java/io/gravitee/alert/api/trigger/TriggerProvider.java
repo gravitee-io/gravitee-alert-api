@@ -25,36 +25,28 @@ import io.gravitee.common.component.LifecycleComponent;
  * @author GraviteeSource Team
  */
 public interface TriggerProvider extends LifecycleComponent<TriggerProvider> {
-
     void register(Trigger trigger);
 
     void unregister(Trigger trigger);
 
-    default void addListener(Listener listener) {
-    }
+    default void addListener(Listener listener) {}
 
     // Note: this interface is useless but is kept for backward-compatibility
-    interface Listener extends io.gravitee.alert.api.Listener {
-
-    }
+    interface Listener extends io.gravitee.alert.api.Listener {}
 
     interface OnConnectionListener extends Listener {
-
         void doOnConnect();
     }
 
     interface OnDisconnectionListener extends Listener {
-
         void doOnDisconnect();
     }
 
     interface OnCommandListener extends Listener {
-
         void doOnCommand(Command command);
     }
 
     interface OnCommandResultListener extends Listener {
-
         <T> void doOnCommand(Command command, Handler<T> resultHandler);
     }
 }

@@ -17,10 +17,9 @@ package io.gravitee.alert.api.condition;
 
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
+import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * The aggregation function condition is based on a time window and must be define with a duration.
@@ -42,11 +41,11 @@ public class AggregationConditionTest {
     @Test
     public void shouldBuildThresholdCondition_average() {
         AggregationCondition condition = AggregationCondition
-                .avg("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .projection(Projections.property("api"))
-                .build();
+            .avg("latency")
+            .duration(1, TimeUnit.MINUTES)
+            .lowerThan(40d)
+            .projection(Projections.property("api"))
+            .build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.AVG, condition.getFunction());
@@ -72,11 +71,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_count() {
-        AggregationCondition condition = AggregationCondition
-                .count()
-                .duration(1, TimeUnit.MINUTES)
-                .greaterThanOrEquals(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.count().duration(1, TimeUnit.MINUTES).greaterThanOrEquals(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.COUNT, condition.getFunction());
@@ -97,11 +92,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_minimum() {
-        AggregationCondition condition = AggregationCondition
-                .min("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.min("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.MIN, condition.getFunction());
@@ -122,11 +113,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_maximum() {
-        AggregationCondition condition = AggregationCondition
-                .max("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.max("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.MAX, condition.getFunction());
@@ -147,11 +134,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_percentile50() {
-        AggregationCondition condition = AggregationCondition
-                .p50("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.p50("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.P50, condition.getFunction());
@@ -164,7 +147,6 @@ public class AggregationConditionTest {
         Assert.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
-
     /**
      * This rule is testing the following use-case:
      *
@@ -173,11 +155,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_percentile90() {
-        AggregationCondition condition = AggregationCondition
-                .p90("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.p90("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.P90, condition.getFunction());
@@ -198,11 +176,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_percentile95() {
-        AggregationCondition condition = AggregationCondition
-                .p95("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.p95("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.P95, condition.getFunction());
@@ -223,11 +197,7 @@ public class AggregationConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_percentile99() {
-        AggregationCondition condition = AggregationCondition
-                .p99("latency")
-                .duration(1, TimeUnit.MINUTES)
-                .lowerThan(40d)
-                .build();
+        AggregationCondition condition = AggregationCondition.p99("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals(AggregationCondition.Function.P99, condition.getFunction());

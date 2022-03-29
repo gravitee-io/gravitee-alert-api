@@ -31,9 +31,7 @@ public class ThresholdRangeConditionTest {
      */
     @Test
     public void shouldBuildThresholdCondition_betweenInclusive() {
-        ThresholdRangeCondition condition = ThresholdRangeCondition
-                .between("latency", 100d, 500d)
-                .build();
+        ThresholdRangeCondition condition = ThresholdRangeCondition.between("latency", 100d, 500d).build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 100d, condition.getThresholdLow());
@@ -48,11 +46,8 @@ public class ThresholdRangeConditionTest {
     @Test
     public void shouldBuildThresholdCondition_betweenExclusive() {
         ThresholdRangeCondition condition = ThresholdRangeCondition
-                .between(
-                        "latency",
-                        ThresholdRangeCondition.Operator.EXCLUSIVE, 100d,
-                        ThresholdRangeCondition.Operator.EXCLUSIVE, 500d)
-                .build();
+            .between("latency", ThresholdRangeCondition.Operator.EXCLUSIVE, 100d, ThresholdRangeCondition.Operator.EXCLUSIVE, 500d)
+            .build();
 
         Assert.assertNotNull(condition);
         Assert.assertEquals((Double) 100d, condition.getThresholdLow());

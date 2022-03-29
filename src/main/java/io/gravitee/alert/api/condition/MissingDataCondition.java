@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,9 +29,11 @@ import java.util.concurrent.TimeUnit;
 public class MissingDataCondition extends WindowBasedCondition implements Filter {
 
     @JsonCreator
-    private MissingDataCondition(@JsonProperty(value = "duration", required = true) long duration,
-                                 @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
-                                 @JsonProperty(value = "projections") List<Projection> projections) {
+    private MissingDataCondition(
+        @JsonProperty(value = "duration", required = true) long duration,
+        @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+        @JsonProperty(value = "projections") List<Projection> projections
+    ) {
         super(Type.MISSING_DATA, timeUnit, duration, projections);
     }
 

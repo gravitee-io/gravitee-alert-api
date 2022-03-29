@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +29,10 @@ import java.util.concurrent.TimeUnit;
 public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     public enum Operator {
-        LT, LTE, GTE, GT
+        LT,
+        LTE,
+        GTE,
+        GT,
     }
 
     private final Operator operator;
@@ -41,15 +43,15 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
 
     @JsonCreator
     private RateCondition(
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "threshold", required = true) double threshold,
-            @JsonProperty(value = "comparison", required = true) SingleValueCondition comparison,
-            @JsonProperty(value = "duration", required = true) long duration,
-            @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
-            @JsonProperty(value = "sampleSize") Integer sampleSize,
-            @JsonProperty(value = "projections") List<Projection> projections) {
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "threshold", required = true) double threshold,
+        @JsonProperty(value = "comparison", required = true) SingleValueCondition comparison,
+        @JsonProperty(value = "duration", required = true) long duration,
+        @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+        @JsonProperty(value = "sampleSize") Integer sampleSize,
+        @JsonProperty(value = "projections") List<Projection> projections
+    ) {
         super(Type.RATE, comparison, timeUnit, duration, projections);
-
         this.operator = operator;
         this.threshold = threshold;
         this.sampleSize = sampleSize == null ? 1 : sampleSize;
@@ -89,6 +91,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
     }
 
     public static class DurationBuilder {
+
         private final SingleValueCondition comparison;
         private final long duration;
         private final TimeUnit timeUnit;
@@ -121,6 +124,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
     }
 
     public static class ProjectionBuilder {
+
         private final SingleValueCondition comparison;
         private final long duration;
         private final TimeUnit timeUnit;
@@ -155,14 +159,7 @@ public class RateCondition extends ComparisonBasedAccumulatorCondition {
         }
 
         public RateCondition build() {
-            return new RateCondition(
-                    operator,
-                    threshold,
-                    comparison,
-                    duration,
-                    timeUnit,
-                    sampleSize,
-                    projections);
+            return new RateCondition(operator, threshold, comparison, duration, timeUnit, sampleSize, projections);
         }
     }
 }

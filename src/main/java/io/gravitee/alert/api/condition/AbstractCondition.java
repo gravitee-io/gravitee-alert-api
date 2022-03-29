@@ -16,7 +16,6 @@
 package io.gravitee.alert.api.condition;
 
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.Collections;
 import java.util.List;
 

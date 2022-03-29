@@ -16,7 +16,6 @@
 package io.gravitee.alert.api.event;
 
 import io.gravitee.common.utils.UUID;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -70,10 +69,6 @@ public abstract class AbstractEvent implements Event, Serializable {
 
     @Override
     public String toString() {
-        return "AbstractEvent{" +
-                "id='" + id + '\'' +
-                ", timestamp=" + timestamp +
-                ", type='" + type + '\'' +
-                '}';
+        return "AbstractEvent{" + "id='" + id + '\'' + ", timestamp=" + timestamp + ", type='" + type + '\'' + '}';
     }
 }

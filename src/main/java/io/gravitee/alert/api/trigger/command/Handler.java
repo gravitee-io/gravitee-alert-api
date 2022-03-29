@@ -25,6 +25,5 @@ package io.gravitee.alert.api.trigger.command;
  */
 @FunctionalInterface
 public interface Handler<T> {
-
     void handle(T result);
 }
