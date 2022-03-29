@@ -25,7 +25,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CompareCondition extends AbstractCondition implements Filter {
 
     public enum Operator {
-        LT, LTE, GTE, GT
+        LT,
+        LTE,
+        GTE,
+        GT,
     }
 
     private final String property;
@@ -38,12 +41,12 @@ public class CompareCondition extends AbstractCondition implements Filter {
 
     @JsonCreator
     private CompareCondition(
-            @JsonProperty(value = "property", required = true) String property,
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "multiplier", required = true) Double multiplier,
-            @JsonProperty(value = "property2", required = true) String property2) {
+        @JsonProperty(value = "property", required = true) String property,
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "multiplier", required = true) Double multiplier,
+        @JsonProperty(value = "property2", required = true) String property2
+    ) {
         super(Type.COMPARE);
-
         this.property = property;
         this.operator = operator;
         this.multiplier = multiplier;

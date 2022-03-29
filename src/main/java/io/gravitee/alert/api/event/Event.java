@@ -22,9 +22,8 @@ import java.util.Map;
  * @author GraviteeSource Team
  */
 public interface Event extends Comparable<Event> {
-
-    String PROPERTY_INSTALLATION= "installation";
-    String PROPERTY_ORGANIZATION= "organization";
+    String PROPERTY_INSTALLATION = "installation";
+    String PROPERTY_ORGANIZATION = "organization";
     String PROPERTY_ENVIRONMENT = "environment";
 
     /**
@@ -62,8 +61,7 @@ public interface Event extends Comparable<Event> {
     @Override
     default int compareTo(Event o) {
         int c = this.id().compareTo(o.id());
-        if (0 != c)
-            return c;
+        if (0 != c) return c;
 
         return Long.compare(this.timestamp(), o.timestamp());
     }

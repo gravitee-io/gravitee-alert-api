@@ -16,7 +16,6 @@
 package io.gravitee.alert.api.event;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -96,6 +95,7 @@ public class DefaultEvent extends AbstractEvent implements Serializable {
     }
 
     public static class Builder {
+
         private final long timestamp;
         private String type;
         private Map<String, String> context;

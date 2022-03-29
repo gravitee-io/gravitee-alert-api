@@ -22,7 +22,6 @@ import io.gravitee.alert.api.condition.projection.Projection;
 import io.gravitee.common.utils.UUID;
 import io.gravitee.notifier.api.Notification;
 import io.gravitee.notifier.api.Period;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ import java.util.*;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({"id", "name", "source", "enabled", "conditions", "filters", "dampening", "notifications", "metadata"})
+@JsonPropertyOrder({ "id", "name", "source", "enabled", "conditions", "filters", "dampening", "notifications", "metadata" })
 public class Trigger implements Serializable {
 
     private static final long serialVersionUID = 19504799855563L;
@@ -56,12 +55,12 @@ public class Trigger implements Serializable {
 
     @JsonCreator
     protected Trigger(
-            @JsonProperty(value = "id", required = true) String id,
-            @JsonProperty(value = "name", required = true) String name,
-            @JsonProperty(value = "severity") Severity severity,
-            @JsonProperty(value = "source", required = true) String source,
-            @JsonProperty(value = "enabled") boolean enabled,
-            @JsonProperty(value = "notificationPeriods") List<Period> notificationPeriods
+        @JsonProperty(value = "id", required = true) String id,
+        @JsonProperty(value = "name", required = true) String name,
+        @JsonProperty(value = "severity") Severity severity,
+        @JsonProperty(value = "source", required = true) String source,
+        @JsonProperty(value = "enabled") boolean enabled,
+        @JsonProperty(value = "notificationPeriods") List<Period> notificationPeriods
     ) {
         // Default private constructor to force builder usage.
         this.source = source;
@@ -187,17 +186,32 @@ public class Trigger implements Serializable {
 
     @Override
     public String toString() {
-        return "Trigger{" +
-                "id='" + id + '\'' +
-                ", source='" + source + '\'' +
-                ", name='" + name + '\'' +
-                ", dampening='" + dampening + '\'' +
-                ", notifications=" + notifications +
-                ", conditions=" + conditions +
-                ", notificationPeriods=" + notificationPeriods +
-                ", filters=" + filters +
-                ", enabled=" + enabled +
-                '}';
+        return (
+            "Trigger{" +
+            "id='" +
+            id +
+            '\'' +
+            ", source='" +
+            source +
+            '\'' +
+            ", name='" +
+            name +
+            '\'' +
+            ", dampening='" +
+            dampening +
+            '\'' +
+            ", notifications=" +
+            notifications +
+            ", conditions=" +
+            conditions +
+            ", notificationPeriods=" +
+            notificationPeriods +
+            ", filters=" +
+            filters +
+            ", enabled=" +
+            enabled +
+            '}'
+        );
     }
 
     /**
@@ -225,10 +239,11 @@ public class Trigger implements Serializable {
     public enum Severity {
         INFO,
         WARNING,
-        CRITICAL
+        CRITICAL,
     }
 
     public static class Builder {
+
         private String id;
         private final String source;
         private String name;
@@ -339,8 +354,13 @@ public class Trigger implements Serializable {
 
         public Trigger build() {
             final Trigger trigger = new Trigger(
-                    (id == null) ? UUID.random().toString() : id,
-                    name, severity, source, enabled, notificationPeriods);
+                (id == null) ? UUID.random().toString() : id,
+                name,
+                severity,
+                source,
+                enabled,
+                notificationPeriods
+            );
 
             trigger.setDescription(description);
             trigger.setNotifications(notifications);

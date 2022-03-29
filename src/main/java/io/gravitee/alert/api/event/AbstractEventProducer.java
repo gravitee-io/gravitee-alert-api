@@ -24,12 +24,8 @@ import io.gravitee.common.component.AbstractLifecycleComponent;
 public abstract class AbstractEventProducer extends AbstractLifecycleComponent<EventProducer> implements EventProducer {
 
     @Override
-    protected void doStart() throws Exception {
-
-    }
+    protected void doStart() throws Exception {}
 
     @Override
-    protected void doStop() throws Exception {
-
-    }
+    protected void doStop() throws Exception {}
 }

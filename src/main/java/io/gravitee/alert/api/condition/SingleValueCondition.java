@@ -19,6 +19,4 @@ package io.gravitee.alert.api.condition;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface SingleValueCondition extends Condition {
-
-}
+public interface SingleValueCondition extends Condition {}

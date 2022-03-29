@@ -15,5 +15,4 @@
  */
 package io.gravitee.alert.api.condition;
 
-public interface Filter extends SingleValueCondition {
-}
+public interface Filter extends SingleValueCondition {}

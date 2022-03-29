@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.List;
 
 /**
@@ -28,7 +27,12 @@ import java.util.List;
 public class StringCondition extends AbstractCondition implements Filter {
 
     public enum Operator {
-        EQUALS, NOT_EQUALS, STARTS_WITH, ENDS_WITH, CONTAINS, MATCHES
+        EQUALS,
+        NOT_EQUALS,
+        STARTS_WITH,
+        ENDS_WITH,
+        CONTAINS,
+        MATCHES,
     }
 
     private final String property;
@@ -41,13 +45,13 @@ public class StringCondition extends AbstractCondition implements Filter {
 
     @JsonCreator
     private StringCondition(
-            @JsonProperty(value = "property", required = true) String property,
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "pattern", required = true) String pattern,
-            @JsonProperty(value = "ignoreCase") boolean ignoreCase,
-            @JsonProperty(value = "projections") List<Projection> projections) {
+        @JsonProperty(value = "property", required = true) String property,
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "pattern", required = true) String pattern,
+        @JsonProperty(value = "ignoreCase") boolean ignoreCase,
+        @JsonProperty(value = "projections") List<Projection> projections
+    ) {
         super(Type.STRING, projections);
-
         this.property = property;
         this.operator = operator;
         this.pattern = pattern;
@@ -96,7 +100,7 @@ public class StringCondition extends AbstractCondition implements Filter {
         private final Operator operator;
         private final String pattern;
         private final boolean ignoreCase;
-        private  List<Projection> projections;
+        private List<Projection> projections;
 
         FilterBuilder(String property, Operator operator, String pattern, boolean ignoreCase) {
             this.property = property;

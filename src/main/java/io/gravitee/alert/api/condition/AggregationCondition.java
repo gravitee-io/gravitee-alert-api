@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,11 +29,21 @@ import java.util.concurrent.TimeUnit;
 public class AggregationCondition extends WindowBasedCondition {
 
     public enum Operator {
-        LT, LTE, GTE, GT
+        LT,
+        LTE,
+        GTE,
+        GT,
     }
 
     public enum Function {
-        COUNT, AVG, MIN, MAX, P50, P90, P95, P99
+        COUNT,
+        AVG,
+        MIN,
+        MAX,
+        P50,
+        P90,
+        P95,
+        P99,
     }
 
     private final Operator operator;
@@ -47,15 +56,15 @@ public class AggregationCondition extends WindowBasedCondition {
 
     @JsonCreator
     private AggregationCondition(
-            @JsonProperty(value = "function", required = true) Function function,
-            @JsonProperty(value = "property") String property,
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "threshold", required = true) Double threshold,
-            @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
-            @JsonProperty(value = "duration", required = true) long duration,
-            @JsonProperty(value = "projections") List<Projection> projections) {
+        @JsonProperty(value = "function", required = true) Function function,
+        @JsonProperty(value = "property") String property,
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "threshold", required = true) Double threshold,
+        @JsonProperty(value = "timeUnit") TimeUnit timeUnit,
+        @JsonProperty(value = "duration", required = true) long duration,
+        @JsonProperty(value = "projections") List<Projection> projections
+    ) {
         super(Type.AGGREGATION, timeUnit, duration, projections);
-
         this.property = property;
         this.operator = operator;
         this.threshold = threshold;
@@ -120,8 +129,7 @@ public class AggregationCondition extends WindowBasedCondition {
 
         private List<Projection> projections;
 
-        ThresholdBuilder(FunctionBuilder functionBuilder, DurationBuilder durationBuilder,
-                         Operator operator, Double threshold) {
+        ThresholdBuilder(FunctionBuilder functionBuilder, DurationBuilder durationBuilder, Operator operator, Double threshold) {
             this.functionBuilder = functionBuilder;
             this.durationBuilder = durationBuilder;
 
@@ -141,11 +149,14 @@ public class AggregationCondition extends WindowBasedCondition {
 
         public AggregationCondition build() {
             return new AggregationCondition(
-                    functionBuilder.getFunction(),
-                    functionBuilder.getProperty(),
-                    operator, threshold,
-                    durationBuilder.getTimeUnit(), durationBuilder.getDuration(),
-                    projections);
+                functionBuilder.getFunction(),
+                functionBuilder.getProperty(),
+                operator,
+                threshold,
+                durationBuilder.getTimeUnit(),
+                durationBuilder.getDuration(),
+                projections
+            );
         }
     }
 
@@ -165,11 +176,11 @@ public class AggregationCondition extends WindowBasedCondition {
         }
 
         public DurationBuilder duration(long duration, TimeUnit timeUnit) {
-            return new DurationBuilder( this, duration, timeUnit);
+            return new DurationBuilder(this, duration, timeUnit);
         }
 
         public DurationBuilder duration(long duration) {
-            return new DurationBuilder( this, duration);
+            return new DurationBuilder(this, duration);
         }
 
         private String getProperty() {
@@ -182,20 +193,19 @@ public class AggregationCondition extends WindowBasedCondition {
     }
 
     public static class DurationBuilder {
+
         private final FunctionBuilder functionBuilder;
 
         private long duration;
         private TimeUnit timeUnit;
 
-        private DurationBuilder(FunctionBuilder functionBuilder,
-                         long duration, TimeUnit timeUnit) {
+        private DurationBuilder(FunctionBuilder functionBuilder, long duration, TimeUnit timeUnit) {
             this.functionBuilder = functionBuilder;
             this.duration = duration;
             this.timeUnit = timeUnit;
         }
 
-        private DurationBuilder(FunctionBuilder functionBuilder,
-                        long duration) {
+        private DurationBuilder(FunctionBuilder functionBuilder, long duration) {
             this.functionBuilder = functionBuilder;
             this.duration = duration;
         }

@@ -46,9 +46,6 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                '}';
+        return "Link{" + "rel='" + rel + '\'' + ", href='" + href + '\'' + '}';
     }
 }

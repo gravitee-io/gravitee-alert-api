@@ -18,7 +18,6 @@ package io.gravitee.alert.api.condition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.util.List;
 
 /**
@@ -28,7 +27,12 @@ import java.util.List;
 public class StringCompareCondition extends AbstractCondition implements Filter {
 
     public enum Operator {
-        EQUALS, NOT_EQUALS, STARTS_WITH, ENDS_WITH, CONTAINS, MATCHES
+        EQUALS,
+        NOT_EQUALS,
+        STARTS_WITH,
+        ENDS_WITH,
+        CONTAINS,
+        MATCHES,
     }
 
     private final String property;
@@ -41,13 +45,13 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
 
     @JsonCreator
     private StringCompareCondition(
-            @JsonProperty(value = "property", required = true) String property,
-            @JsonProperty(value = "operator", required = true) Operator operator,
-            @JsonProperty(value = "property2", required = true) String property2,
-            @JsonProperty(value = "ignoreCase") boolean ignoreCase,
-            @JsonProperty(value = "projections") List<Projection> projections) {
+        @JsonProperty(value = "property", required = true) String property,
+        @JsonProperty(value = "operator", required = true) Operator operator,
+        @JsonProperty(value = "property2", required = true) String property2,
+        @JsonProperty(value = "ignoreCase") boolean ignoreCase,
+        @JsonProperty(value = "projections") List<Projection> projections
+    ) {
         super(Type.STRING_COMPARE, projections);
-
         this.property = property;
         this.operator = operator;
         this.property2 = property2;
@@ -108,7 +112,7 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
         private final Operator operator;
         private final String property2;
         private final boolean ignoreCase;
-        private  List<Projection> projections;
+        private List<Projection> projections;
 
         FilterBuilder(String property, Operator operator, String property2, boolean ignoreCase) {
             this.property = property;

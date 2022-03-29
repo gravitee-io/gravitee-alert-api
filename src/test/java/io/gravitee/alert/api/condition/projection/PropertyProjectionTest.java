@@ -32,7 +32,7 @@ public class PropertyProjectionTest {
         Assert.assertEquals("api", projection.getProperty());
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void shouldBuildProjection_emptyProperty() {
         Projections.property(null);
     }

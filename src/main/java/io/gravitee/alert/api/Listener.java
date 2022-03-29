@@ -19,5 +19,4 @@ package io.gravitee.alert.api;
  * @author Jeoffrey HAEYAERT (jeoffrey.haeyaert at graviteesource.com)
  * @author GraviteeSource Team
  */
-public interface Listener {
-}
+public interface Listener {}

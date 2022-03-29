@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.gravitee.alert.api.condition.projection.Projection;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,11 +27,9 @@ import java.util.List;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "type")
-@JsonSubTypes({
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
+@JsonSubTypes(
+    {
         @JsonSubTypes.Type(value = StringCondition.class, name = "STRING"),
         @JsonSubTypes.Type(value = StringCondition.class, name = "string"),
         @JsonSubTypes.Type(value = ThresholdCondition.class, name = "THRESHOLD"),
@@ -48,16 +45,24 @@ import java.util.List;
         @JsonSubTypes.Type(value = StringCompareCondition.class, name = "STRING_COMPARE"),
         @JsonSubTypes.Type(value = StringCompareCondition.class, name = "string_compare"),
         @JsonSubTypes.Type(value = MissingDataCondition.class, name = "MISSING_DATA"),
-        @JsonSubTypes.Type(value = MissingDataCondition.class, name = "missing_data")
-})
+        @JsonSubTypes.Type(value = MissingDataCondition.class, name = "missing_data"),
+    }
+)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface Condition extends Serializable {
-
     List<Projection> getProjections();
 
     enum Type {
-        STRING, THRESHOLD, THRESHOLD_RANGE, RATE, FREQUENCY, AGGREGATION, COMPARE, STRING_COMPARE, MISSING_DATA
+        STRING,
+        THRESHOLD,
+        THRESHOLD_RANGE,
+        RATE,
+        FREQUENCY,
+        AGGREGATION,
+        COMPARE,
+        STRING_COMPARE,
+        MISSING_DATA,
     }
 
     Type getType();

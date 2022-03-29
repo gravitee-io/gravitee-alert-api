@@ -17,10 +17,9 @@ package io.gravitee.alert.api.condition;
 
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
+import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Missing data condition is based on a time window and must be define with a duration.
@@ -36,9 +35,9 @@ public class MissingDataConditionTest {
     @Test
     public void shouldBuildMissingDataCondition() {
         MissingDataCondition condition = MissingDataCondition
-                .duration(10, TimeUnit.SECONDS)
-                .projection(Projections.property("api"))
-                .build();
+            .duration(10, TimeUnit.SECONDS)
+            .projection(Projections.property("api"))
+            .build();
 
         // Check condition
         Assert.assertNotNull(condition);
@@ -50,5 +49,4 @@ public class MissingDataConditionTest {
         Assert.assertEquals(1, condition.getProjections().size());
         Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
-
 }

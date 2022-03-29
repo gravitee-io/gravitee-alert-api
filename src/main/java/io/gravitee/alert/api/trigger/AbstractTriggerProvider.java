@@ -24,12 +24,8 @@ import io.gravitee.common.component.AbstractLifecycleComponent;
 public abstract class AbstractTriggerProvider extends AbstractLifecycleComponent<TriggerProvider> implements TriggerProvider {
 
     @Override
-    protected void doStart() throws Exception {
-
-    }
+    protected void doStart() throws Exception {}
 
     @Override
-    protected void doStop() throws Exception {
-
-    }
+    protected void doStop() throws Exception {}
 }

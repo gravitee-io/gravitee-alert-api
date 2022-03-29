@@ -23,19 +23,15 @@ import io.gravitee.common.component.LifecycleComponent;
  * @author GraviteeSource Team
  */
 public interface EventProducer extends LifecycleComponent<EventProducer> {
-
     void send(Event event);
 
-    default void addListener(Listener listener) {
-    }
+    default void addListener(Listener listener) {}
 
     interface OnConnectionListener extends Listener {
-
         void doOnConnect();
     }
 
     interface OnDisconnectionListener extends Listener {
-
         void doOnDisconnect();
     }
 }
