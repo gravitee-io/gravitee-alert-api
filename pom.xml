@@ -34,7 +34,7 @@
     <name>Gravitee.io - Alert - API</name>
 
     <properties>
-        <gravitee-common.version>1.22.3</gravitee-common.version>
+        <gravitee-common.version>1.26.1</gravitee-common.version>
         <gravitee-notifier-api.version>1.4.1</gravitee-notifier-api.version>
     </properties>
 
