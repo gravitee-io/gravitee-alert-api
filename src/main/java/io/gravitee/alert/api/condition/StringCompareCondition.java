@@ -86,8 +86,8 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
         return contains(property, property2, false);
     }
 
-    public static FilterBuilder contains(String property, String property2, boolean ignoreCase) {
-        return new FilterBuilder(property, Operator.CONTAINS, property2, ignoreCase);
+    public static FilterBuilder contains(String property, String pattern, boolean ignoreCase) {
+        return new FilterBuilder(property, Operator.CONTAINS, pattern, ignoreCase);
     }
 
     public static FilterBuilder matches(String property, String pattern) {
@@ -98,12 +98,12 @@ public class StringCompareCondition extends AbstractCondition implements Filter 
         return new FilterBuilder(property, Operator.MATCHES, pattern, ignoreCase);
     }
 
-    public static StringCondition.FilterBuilder startsWith(String property, String pattern) {
+    public static FilterBuilder startsWith(String property, String pattern) {
         return startsWith(property, pattern, false);
     }
 
-    public static StringCondition.FilterBuilder startsWith(String property, String pattern, boolean ignoreCase) {
-        return new StringCondition.FilterBuilder(property, StringCondition.Operator.STARTS_WITH, pattern, ignoreCase);
+    public static FilterBuilder startsWith(String property, String pattern, boolean ignoreCase) {
+        return new FilterBuilder(property, Operator.STARTS_WITH, pattern, ignoreCase);
     }
 
     public static class FilterBuilder {
