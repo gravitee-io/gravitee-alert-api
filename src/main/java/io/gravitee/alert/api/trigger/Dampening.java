@@ -81,7 +81,7 @@ public class Dampening implements Serializable {
     }
 
     public static Dampening relaxedTime(int trueEvaluations, long duration) {
-        return new Dampening(Mode.STRICT_TIME, trueEvaluations, null, duration);
+        return new Dampening(Mode.RELAXED_TIME, trueEvaluations, null, duration);
     }
 
     public Mode getMode() {

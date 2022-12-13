@@ -17,14 +17,14 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>io.gravitee</groupId>
         <artifactId>gravitee-parent</artifactId>
-        <version>17.2</version>
+        <version>21.0.0</version>
     </parent>
 
     <groupId>io.gravitee.alert</groupId>
@@ -34,9 +34,22 @@
     <name>Gravitee.io - Alert - API</name>
 
     <properties>
-        <gravitee-common.version>1.22.3</gravitee-common.version>
+        <gravitee-common.version>2.0.0</gravitee-common.version>
         <gravitee-notifier-api.version>1.4.1</gravitee-notifier-api.version>
+        <gravitee-bom.version>3.0.0</gravitee-bom.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.gravitee</groupId>
+                <artifactId>gravitee-bom</artifactId>
+                <version>${gravitee-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -55,7 +68,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Test scope -->
@@ -71,7 +83,7 @@
             <plugin>
                 <groupId>com.hubspot.maven.plugins</groupId>
                 <artifactId>prettier-maven-plugin</artifactId>
-                <version>0.17</version>
+                <version>0.18</version>
                 <configuration>
                     <nodeVersion>12.13.0</nodeVersion>
                     <prettierJavaVersion>1.6.1</prettierJavaVersion>
