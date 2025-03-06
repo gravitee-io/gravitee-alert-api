@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,10 @@
  */
 package io.gravitee.alert.api.condition.projection;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -28,12 +30,12 @@ public class PropertyProjectionTest {
     public void shouldBuildProjection() {
         PropertyProjection projection = Projections.property("api");
 
-        Assert.assertNotNull(projection);
-        Assert.assertEquals("api", projection.getProperty());
+        Assertions.assertNotNull(projection);
+        Assertions.assertEquals("api", projection.getProperty());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void shouldBuildProjection_emptyProperty() {
-        Projections.property(null);
+        assertThrows(NullPointerException.class, () -> Projections.property(null));
     }
 }

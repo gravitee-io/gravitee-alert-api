@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,8 @@ package io.gravitee.alert.api.condition;
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * The aggregation function condition is based on a time window and must be define with a duration.
@@ -47,20 +47,20 @@ public class AggregationConditionTest {
             .projection(Projections.property("api"))
             .build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.AVG, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.AVG, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
 
         // Check projection
-        Assert.assertNotNull(condition.getProjections());
-        Assert.assertEquals(1, condition.getProjections().size());
-        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
+        Assertions.assertNotNull(condition.getProjections());
+        Assertions.assertEquals(1, condition.getProjections().size());
+        Assertions.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 
     /**
@@ -73,15 +73,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_count() {
         AggregationCondition condition = AggregationCondition.count().duration(1, TimeUnit.MINUTES).greaterThanOrEquals(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.COUNT, condition.getFunction());
-        Assert.assertNull(condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.GTE, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.COUNT, condition.getFunction());
+        Assertions.assertNull(condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.GTE, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -94,15 +94,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_minimum() {
         AggregationCondition condition = AggregationCondition.min("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.MIN, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.MIN, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -115,15 +115,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_maximum() {
         AggregationCondition condition = AggregationCondition.max("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.MAX, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.MAX, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -136,15 +136,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_percentile50() {
         AggregationCondition condition = AggregationCondition.p50("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.P50, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.P50, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -157,15 +157,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_percentile90() {
         AggregationCondition condition = AggregationCondition.p90("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.P90, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.P90, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -178,15 +178,15 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_percentile95() {
         AggregationCondition condition = AggregationCondition.p95("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.P95, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.P95, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 
     /**
@@ -199,14 +199,14 @@ public class AggregationConditionTest {
     public void shouldBuildThresholdCondition_percentile99() {
         AggregationCondition condition = AggregationCondition.p99("latency").duration(1, TimeUnit.MINUTES).lowerThan(40d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(AggregationCondition.Function.P99, condition.getFunction());
-        Assert.assertEquals("latency", condition.getProperty());
-        Assert.assertEquals((Double) 40d, condition.getThreshold());
-        Assert.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(AggregationCondition.Function.P99, condition.getFunction());
+        Assertions.assertEquals("latency", condition.getProperty());
+        Assertions.assertEquals((Double) 40d, condition.getThreshold());
+        Assertions.assertEquals(AggregationCondition.Operator.LT, condition.getOperator());
 
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
     }
 }

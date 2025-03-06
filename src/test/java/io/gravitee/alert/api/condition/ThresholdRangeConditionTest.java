@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
  */
 package io.gravitee.alert.api.condition;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Threshold range condition is based on a single-event value.
@@ -33,11 +33,11 @@ public class ThresholdRangeConditionTest {
     public void shouldBuildThresholdCondition_betweenInclusive() {
         ThresholdRangeCondition condition = ThresholdRangeCondition.between("latency", 100d, 500d).build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals((Double) 100d, condition.getThresholdLow());
-        Assert.assertEquals((Double) 500d, condition.getThresholdHigh());
-        Assert.assertEquals(ThresholdRangeCondition.Operator.INCLUSIVE, condition.getOperatorLow());
-        Assert.assertEquals(ThresholdRangeCondition.Operator.INCLUSIVE, condition.getOperatorHigh());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals((Double) 100d, condition.getThresholdLow());
+        Assertions.assertEquals((Double) 500d, condition.getThresholdHigh());
+        Assertions.assertEquals(ThresholdRangeCondition.Operator.INCLUSIVE, condition.getOperatorLow());
+        Assertions.assertEquals(ThresholdRangeCondition.Operator.INCLUSIVE, condition.getOperatorHigh());
     }
 
     /**
@@ -49,10 +49,10 @@ public class ThresholdRangeConditionTest {
             .between("latency", ThresholdRangeCondition.Operator.EXCLUSIVE, 100d, ThresholdRangeCondition.Operator.EXCLUSIVE, 500d)
             .build();
 
-        Assert.assertNotNull(condition);
-        Assert.assertEquals((Double) 100d, condition.getThresholdLow());
-        Assert.assertEquals((Double) 500d, condition.getThresholdHigh());
-        Assert.assertEquals(ThresholdRangeCondition.Operator.EXCLUSIVE, condition.getOperatorLow());
-        Assert.assertEquals(ThresholdRangeCondition.Operator.EXCLUSIVE, condition.getOperatorHigh());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals((Double) 100d, condition.getThresholdLow());
+        Assertions.assertEquals((Double) 500d, condition.getThresholdHigh());
+        Assertions.assertEquals(ThresholdRangeCondition.Operator.EXCLUSIVE, condition.getOperatorLow());
+        Assertions.assertEquals(ThresholdRangeCondition.Operator.EXCLUSIVE, condition.getOperatorHigh());
     }
 }
