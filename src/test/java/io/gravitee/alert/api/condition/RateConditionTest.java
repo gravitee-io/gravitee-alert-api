@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,8 @@ package io.gravitee.alert.api.condition;
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * The rate / percentage calculation is based on a time window and must be define with a duration.
@@ -51,25 +51,25 @@ public class RateConditionTest {
             .build();
 
         // Check condition
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(40d, condition.getThreshold(), 0);
-        Assert.assertEquals(RateCondition.Operator.LT, condition.getOperator());
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
-        Assert.assertEquals(20, condition.getSampleSize());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(40d, condition.getThreshold(), 0);
+        Assertions.assertEquals(RateCondition.Operator.LT, condition.getOperator());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(20, condition.getSampleSize());
 
         // Check comparison
-        Assert.assertNotNull(condition.getComparison());
-        Assert.assertEquals(ThresholdCondition.class, condition.getComparison().getClass());
-        Assert.assertEquals("latency", ((ThresholdCondition) condition.getComparison()).getProperty());
-        Assert.assertEquals(ThresholdCondition.Operator.GTE, ((ThresholdCondition) condition.getComparison()).getOperator());
-        Assert.assertEquals((Double) 500d, ((ThresholdCondition) condition.getComparison()).getThreshold());
+        Assertions.assertNotNull(condition.getComparison());
+        Assertions.assertEquals(ThresholdCondition.class, condition.getComparison().getClass());
+        Assertions.assertEquals("latency", ((ThresholdCondition) condition.getComparison()).getProperty());
+        Assertions.assertEquals(ThresholdCondition.Operator.GTE, ((ThresholdCondition) condition.getComparison()).getOperator());
+        Assertions.assertEquals((Double) 500d, ((ThresholdCondition) condition.getComparison()).getThreshold());
 
         // Check projection
-        Assert.assertNotNull(condition.getProjections());
-        Assert.assertEquals(1, condition.getProjections().size());
-        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
+        Assertions.assertNotNull(condition.getProjections());
+        Assertions.assertEquals(1, condition.getProjections().size());
+        Assertions.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 
     /**
@@ -85,12 +85,12 @@ public class RateConditionTest {
             .build();
 
         // Check condition
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(40d, condition.getThreshold(), 0);
-        Assert.assertEquals(RateCondition.Operator.LT, condition.getOperator());
-        Assert.assertEquals(1, condition.getDuration());
-        Assert.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
-        Assert.assertEquals(60 * 1000, condition.getWindowTime());
-        Assert.assertEquals(1, condition.getSampleSize());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(40d, condition.getThreshold(), 0);
+        Assertions.assertEquals(RateCondition.Operator.LT, condition.getOperator());
+        Assertions.assertEquals(1, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.MINUTES, condition.getTimeUnit());
+        Assertions.assertEquals(60 * 1000, condition.getWindowTime());
+        Assertions.assertEquals(1, condition.getSampleSize());
     }
 }

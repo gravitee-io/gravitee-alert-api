@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,8 @@ package io.gravitee.alert.api.condition;
 import io.gravitee.alert.api.condition.projection.Projections;
 import io.gravitee.alert.api.condition.projection.PropertyProjection;
 import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Missing data condition is based on a time window and must be define with a duration.
@@ -40,13 +40,13 @@ public class MissingDataConditionTest {
             .build();
 
         // Check condition
-        Assert.assertNotNull(condition);
-        Assert.assertEquals(10, condition.getDuration());
-        Assert.assertEquals(TimeUnit.SECONDS, condition.getTimeUnit());
+        Assertions.assertNotNull(condition);
+        Assertions.assertEquals(10, condition.getDuration());
+        Assertions.assertEquals(TimeUnit.SECONDS, condition.getTimeUnit());
 
         // Check projection
-        Assert.assertNotNull(condition.getProjections());
-        Assert.assertEquals(1, condition.getProjections().size());
-        Assert.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
+        Assertions.assertNotNull(condition.getProjections());
+        Assertions.assertEquals(1, condition.getProjections().size());
+        Assertions.assertEquals("api", ((PropertyProjection) condition.getProjections().get(0)).getProperty());
     }
 }

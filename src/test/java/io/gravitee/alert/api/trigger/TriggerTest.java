@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+/*
+ * Copyright © 2015 The Gravitee team (http://gravitee.io)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,9 +15,7 @@
  */
 package io.gravitee.alert.api.trigger;
 
-import static java.time.temporal.ChronoUnit.HOURS;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gravitee.alert.api.condition.*;
@@ -28,8 +26,8 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
@@ -37,11 +35,11 @@ import org.junit.Test;
  */
 public class TriggerTest {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldNotBuild_noCondition() {
-        Trigger.on("my-source").build();
+        assertThrows(IllegalStateException.class, () -> Trigger.on("my-source").build());
     }
 
     @Test
@@ -54,13 +52,13 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
-        Assert.assertEquals(Trigger.Severity.INFO, trigger.getSeverity());
-        Assert.assertEquals(Trigger.Severity.INFO, trigger2.getSeverity());
+        Assertions.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(Trigger.Severity.INFO, trigger.getSeverity());
+        Assertions.assertEquals(Trigger.Severity.INFO, trigger2.getSeverity());
     }
 
     @Test
@@ -74,11 +72,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -91,11 +89,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -108,11 +106,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -125,11 +123,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -142,11 +140,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -160,11 +158,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -178,11 +176,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -197,11 +195,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -214,11 +212,11 @@ public class TriggerTest {
 
         String json = mapper.writeValueAsString(trigger);
 
-        Assert.assertNotNull(json);
+        Assertions.assertNotNull(json);
 
         Trigger trigger2 = mapper.readValue(json, Trigger.class);
 
-        Assert.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(trigger, trigger2);
     }
 
     @Test
@@ -243,12 +241,12 @@ public class TriggerTest {
     @Test
     public void canNotify_notIncluded() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime hourBefore = now.minus(1, HOURS);
+        LocalDateTime hourBefore = now.minusHours(1);
 
         if (now.getDayOfWeek() != hourBefore.getDayOfWeek()) {
             // Be sure we are on the same day (I know some people capable to run this test at midnight! ;-) ).
-            now = now.plus(1, HOURS);
-            hourBefore = hourBefore.plus(1, HOURS);
+            now = now.plusHours(1);
+            hourBefore = hourBefore.plusHours(1);
         }
 
         final Period period = new Period.Builder()
