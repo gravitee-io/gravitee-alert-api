@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/gravitee-io/gravitee-alert-api/compare/2.0.0...2.1.0) (2025-03-07)
+
+
+### Features
+
+* **deps:** upgrade gravitee dependencies ([2659164](https://github.com/gravitee-io/gravitee-alert-api/commit/2659164852c761ccd9e1502fcd25c2f33794cc03))
+
 # [2.0.0](https://github.com/gravitee-io/gravitee-alert-api/compare/1.9.1...2.0.0) (2022-12-19)
 
 
