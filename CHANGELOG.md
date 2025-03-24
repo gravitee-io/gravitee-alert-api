@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.1...2.1.2) (2025-03-24)
+
+
+### Bug Fixes
+
+* **deps:** update io.gravitee.common:gravitee-common to v4.6.1 ([49ec659](https://github.com/gravitee-io/gravitee-alert-api/commit/49ec6591a0be3974f03bc1646ba65011e5c10415))
+
 ## [2.1.1](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.0...2.1.1) (2025-03-12)
 
 
