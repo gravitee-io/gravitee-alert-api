@@ -1,3 +1,10 @@
+## [2.1.12](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.11...2.1.12) (2025-08-18)
+
+
+### Bug Fixes
+
+* **deps:** update io.gravitee:gravitee-bom to v8.3.32 ([1ce89db](https://github.com/gravitee-io/gravitee-alert-api/commit/1ce89dba72954acc2cfeeefd8d65b7317389c128))
+
 ## [2.1.11](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.10...2.1.11) (2025-08-05)
 
 
