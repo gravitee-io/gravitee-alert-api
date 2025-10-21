@@ -1,3 +1,10 @@
+## [2.1.19](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.18...2.1.19) (2025-10-21)
+
+
+### Bug Fixes
+
+* **deps:** update io.gravitee:gravitee-parent to v22.6.0 ([d4221ea](https://github.com/gravitee-io/gravitee-alert-api/commit/d4221eaf86de6147b7a8d9f43ec460379c2fc051))
+
 ## [2.1.18](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.17...2.1.18) (2025-10-06)
 
 
