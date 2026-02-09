@@ -36,7 +36,7 @@
     <properties>
         <skip.validation>false</skip.validation>
 
-        <gravitee-common.version>4.8.0</gravitee-common.version>
+        <gravitee-common.version>4.9.0</gravitee-common.version>
         <gravitee-notifier-api.version>1.4.3</gravitee-notifier-api.version>
         <gravitee-bom.version>8.3.47</gravitee-bom.version>
         <prettier-maven-plugin.prettierJavaVersion>2.1.0</prettier-maven-plugin.prettierJavaVersion>
