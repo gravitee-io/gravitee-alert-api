@@ -53,6 +53,12 @@ public class Trigger implements Serializable {
     private List<Filter> filters;
     private List<Period> notificationPeriods;
 
+    @JsonProperty("created_at")
+    private Date createdAt;
+
+    @JsonProperty("updated_at")
+    private Date updatedAt;
+
     @JsonCreator
     protected Trigger(
         @JsonProperty(value = "id", required = true) String id,
@@ -171,6 +177,22 @@ public class Trigger implements Serializable {
         this.notificationPeriods = notificationPeriods;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -210,6 +232,10 @@ public class Trigger implements Serializable {
             filters +
             ", enabled=" +
             enabled +
+            ", createdAt=" +
+            createdAt +
+            ", updatedAt=" +
+            updatedAt +
             '}'
         );
     }
@@ -257,6 +283,8 @@ public class Trigger implements Serializable {
         private List<Period> notificationPeriods = new ArrayList<>();
         private boolean enabled = true;
         private Dampening dampening;
+        private Date createdAt;
+        private Date updatedAt;
 
         private Builder(String source) {
             this.source = source;
@@ -352,6 +380,16 @@ public class Trigger implements Serializable {
             return this;
         }
 
+        public Trigger.Builder createdAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Trigger.Builder updatedAt(Date updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
         public Trigger build() {
             final Trigger trigger = new Trigger(
                 (id == null) ? UUID.random().toString() : id,
@@ -366,6 +404,8 @@ public class Trigger implements Serializable {
             trigger.setNotifications(notifications);
             trigger.setEnabled(enabled);
             trigger.setMetadata(metadata);
+            trigger.setCreatedAt(createdAt);
+            trigger.setUpdatedAt(updatedAt);
 
             if (conditions == null || conditions.isEmpty()) {
                 throw new IllegalStateException("A trigger need, at least, one condition defined");

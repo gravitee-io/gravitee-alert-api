@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -262,5 +263,48 @@ public class TriggerTest {
             .build();
 
         assertFalse(trigger.canNotify(now.toEpochSecond(ZoneOffset.UTC) * 1000));
+    }
+
+    @Test
+    public void shouldExportToJson_withCreatedAtAndUpdatedAt() throws IOException {
+        Date createdAt = new Date(1234567890000L);
+        Date updatedAt = new Date(1234567900000L);
+
+        Trigger trigger = Trigger
+            .on("my-source")
+            .name("shouldExportToJson_withCreatedAtAndUpdatedAt")
+            .condition(StringCondition.equals("a-field", "a-value").build())
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
+            .build();
+
+        String json = mapper.writeValueAsString(trigger);
+
+        Assertions.assertNotNull(json);
+
+        Trigger trigger2 = mapper.readValue(json, Trigger.class);
+
+        Assertions.assertEquals(trigger, trigger2);
+        Assertions.assertEquals(createdAt, trigger2.getCreatedAt());
+        Assertions.assertEquals(updatedAt, trigger2.getUpdatedAt());
+    }
+
+    @Test
+    public void shouldExportToJson_withNullTimestamps() throws IOException {
+        Trigger trigger = Trigger
+            .on("my-source")
+            .name("shouldExportToJson_withNullTimestamps")
+            .condition(StringCondition.equals("a-field", "a-value").build())
+            .build();
+
+        String json = mapper.writeValueAsString(trigger);
+
+        Assertions.assertNotNull(json);
+
+        Trigger trigger2 = mapper.readValue(json, Trigger.class);
+
+        Assertions.assertEquals(trigger, trigger2);
+        Assertions.assertNull(trigger2.getCreatedAt());
+        Assertions.assertNull(trigger2.getUpdatedAt());
     }
 }
