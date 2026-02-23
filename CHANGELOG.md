@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.22...3.0.0) (2026-02-23)
+
+
+### Bug Fixes
+
+* pass through createdAt and updatedAt to alert engine ([f065282](https://github.com/gravitee-io/gravitee-alert-api/commit/f065282e6eee5434cf1f288832ac4d1e3fde837d))
+
+
+### BREAKING CHANGES
+
+* Trigger now declares createdAt and updatedAt directly.
+APIM must remove these fields from superclass before upgrading.
+
 ## [2.1.22](https://github.com/gravitee-io/gravitee-alert-api/compare/2.1.21...2.1.22) (2025-12-15)
 
 
