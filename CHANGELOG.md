@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/gravitee-io/gravitee-alert-api/compare/3.0.1...3.0.2) (2026-08-20)
+
+
+### Bug Fixes
+
+* **deps:** update io.gravitee.common:gravitee-common to v4.9.1 ([b4adc6c](https://github.com/gravitee-io/gravitee-alert-api/commit/b4adc6cb94db9d0d4e251061ca2495b7ac9dad35))
+
 ## [3.0.1](https://github.com/gravitee-io/gravitee-alert-api/compare/3.0.0...3.0.1) (2026-08-20)
 
 
