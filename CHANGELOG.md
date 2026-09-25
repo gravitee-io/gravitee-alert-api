@@ -1,3 +1,16 @@
+# [4.0.0](https://github.com/gravitee-io/gravitee-alert-api/compare/3.0.2...4.0.0) (2026-09-25)
+
+
+* chore(deps)!: move to the gravitee orb 5 and parent 24 ([ace8d9f](https://github.com/gravitee-io/gravitee-alert-api/commit/ace8d9f8f13b0a580b04c800949c289f00604ffd))
+
+
+### BREAKING CHANGES
+
+* the artifact is now compiled for Java 21, up from Java 17, and
+requires a Java 21 runtime or later.
+
+https://gravitee.atlassian.net/browse/BX-403
+
 ## [3.0.2](https://github.com/gravitee-io/gravitee-alert-api/compare/3.0.1...3.0.2) (2026-08-20)
 
 
